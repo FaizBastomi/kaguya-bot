@@ -1,9 +1,10 @@
 const { MessageEmbed } = require('discord.js')
-
+const { owner } = require('../config.json')
 module.exports = {
     name: 'eval',
     description: '',
     async execute(client, message, args) {
+      if (!owner) return message.channel.send('Can\'t execute this command!')
       
       const msg = message;
       
