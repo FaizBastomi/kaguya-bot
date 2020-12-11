@@ -13,6 +13,6 @@ module.exports = {
         .setColor('BLUE')
         .setTimestamp()
         
-        return m.edit(embed)
+        return m.edit('Done!', {embed: embed})
     }
 }
