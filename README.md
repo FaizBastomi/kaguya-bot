@@ -7,11 +7,14 @@
 <p align="center">
 <a href="https://github.com/FaizBastomi"><img src="https://img.shields.io/badge/AUTHOR-FAIZBASTOMI-red.svg?style=for-the-badge&logo=github"/></a>
 </p>
+<p align="center">
+<a href="https://www.codefactor.io/repository/github/faizbastomi/kaguya-bot"><img src="https://www.codefactor.io/repository/github/faizbastomi/kaguya-bot/badge" alt="CodeFactor" /></a>
+</p>
+
 <div align="center">
 <img src="https://img.shields.io/badge/Node-%3E%3D%2012x-green.svg?style=flat-square&logo=npm"/>
 <img src="https://img.shields.io/badge/❤️Maintened-YES-blue.svg?style=flat-square"/>
 <img src="https://img.shields.io/github/languages/top/FaizBastomi/kaguya-bot?style=flat-square"/>
-<a href="https://www.codefactor.io/repository/github/faizbastomi/kaguya-bot"><img src="https://www.codefactor.io/repository/github/faizbastomi/kaguya-bot/badge" alt="CodeFactor" /></a>
 </div>
 
 <p align="center">
