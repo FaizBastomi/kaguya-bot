@@ -7,13 +7,12 @@
 <p align="center">
 <a href="https://github.com/FaizBastomi"><img src="https://img.shields.io/badge/AUTHOR-FAIZBASTOMI-red.svg?style=for-the-badge&logo=github"/></a>
 </p>
+<div align="center">
+<img src="https://img.shields.io/badge/Node-%3E%3D%2012x-green.svg?style=flat-square"/>
+<img src="https://img.shields.io/badge/Maintened-YES-blue.svg?style=flat-square"/>
+</div>
 
 # Kaguya-Bot
-
-<div align="center">
-<img src="https://img.shields.io/badge/Node-%3E=%2012.x-green.svg?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Maintened-YES-blue.svg?style=for-the-badge"/>
-</div>
 
 Simple NSFW Discord Bot.
 
