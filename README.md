@@ -1,5 +1,5 @@
 <div align="center">
-
+<img src="https://cdn.discordapp.com/avatars/554086721688698882/480623d8d33313d2273f757333ab91c7.png?size=256" height="128" width="128"/>
 ### Kaguya-Bot
 ![node](https://camo.githubusercontent.com/66102794c58a5dceaa7804663361eb38962c2053eb73ea277d89811967cef723/68747470733a2f2f696d672e736869656c64732e696f2f6e6f64652f762f406f70656e2d77612f77612d6175746f6d617465)
 </div>
