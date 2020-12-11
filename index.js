@@ -21,7 +21,7 @@ client.once('ready', async () => {
     client.user.setPresence({
         status: "online"
     });
-    client.user.setActivity(status[rstatus], { type: "PLAYING" });
+    client.user.setActivity(`${prefix}help for more info!`, { type: "PLAYING" });
 })
 
 client.on('warn', info => console.log(info));
