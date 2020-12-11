@@ -1,5 +1,10 @@
+<div align="center">
+
 ### Kaguya-Bot
+![node](https://img.shields.io/node/v/kaguya-bot)
 Simple NSFW Discord Bot.
+
+</div>
 
 1. Fill all informations needed [here](https://github.com/FaizBastomi/kaguya-bot/blob/main/config.json)
 2. Tutorial how to get your [Bot Token](https://www.writebots.com/discord-bot-token/)
