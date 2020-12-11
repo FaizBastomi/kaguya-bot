@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const axios = require('axios');
+const { UserAgent } = require('../config.json')
 
 module.exports = {
     name: 'nsfw',
@@ -9,7 +10,7 @@ module.exports = {
         if (!message.channel.nsfw) {
             message.channel.send('This command only can be execute on nsfw channel!')
         } else {
-            axios.get('https://api.computerfreaker.cf/v1/nsfwneko', { headers: { 'User-Agent': 'discordbot/v1/indonesia'} } )
+            axios.get('https://api.computerfreaker.cf/v1/nsfwneko', { headers: { 'User-Agent': `${UserAgent}`} } )
             .then((res) => {
             const embed = new MessageEmbed()
             .setImage(res.data.url)

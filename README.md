@@ -9,7 +9,7 @@ Simple NSFW Discord Bot.
 1. Node.js [install here](https://nodejs.org/en/download)
 2. Git [install here](https://git-scm.com/downloads)
 
-### CLone this project
+### Clone this project
 ```sh
 git clone https://github.com/FaizBastomi/kaguya-bot.git
 ```
@@ -21,7 +21,7 @@ npm install
 
 ### Run Bot
 ```sh
-node index.js
+npm start
 ```
 
 ### Error Found
