@@ -11,10 +11,10 @@
 <img src="https://img.shields.io/badge/Node-%3E%3D%2012x-green.svg?style=flat-square&logo=npm"/>
 <img src="https://img.shields.io/badge/❤️Maintened-YES-blue.svg?style=flat-square"/>
 <img src="https://img.shields.io/github/languages/top/FaizBastomi/kaguya-bot?style=flat-square"/>
+<a href="https://www.codefactor.io/repository/github/faizbastomi/kaguya-bot"><img src="https://www.codefactor.io/repository/github/faizbastomi/kaguya-bot/badge" alt="CodeFactor" /></a>
 </div>
 
 <p align="center">
-<a href="https://wa.me/6285382618855" target="_blank"><img src="https://img.shields.io/badge/Contact-WhatsApp-green.svg?style=flat-square&logo=whatsapp"/></a>
 <a href="https://instagram.com/faiz_bastomy" target="_blank"><img src="https://img.shields.io/badge/Follow-Instagram-orange.svg?style=flat-square&logo=instagram"/></a>
 </p>
 
