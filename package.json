@@ -1,0 +1,19 @@
+{
+  "name": "BotWav2",
+  "version": "10.0.0",
+  "description": "Whatsapp Bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Faiz",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "discord.js": "^12.5.1",
+    "mathjs": "^8.1.0",
+    "ytdl-core": "^4.1.1"
+  },
+  "devDependencies": {}
+}
