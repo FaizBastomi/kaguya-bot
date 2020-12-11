@@ -25,7 +25,5 @@ npm start
 ```
 
 ### Error Found
-```sh
 Let me know if you find error. Just make an issues, then i will fix it.
 Don't forget to copy-paste your error log.
-```
