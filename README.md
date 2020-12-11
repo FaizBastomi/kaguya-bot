@@ -2,7 +2,7 @@
 <img src="https://cdn.discordapp.com/avatars/554086721688698882/480623d8d33313d2273f757333ab91c7.png?size=256" height="128" width="128"/>
 </p>
 <p align="center">
-<img src="https://img.shields.io/badge/Whatsapp Bot-green?colorA=%23ff0000&colorB=%23017e40&style=for-the-badge"/>
+<img src="https://img.shields.io/badge/-Discord%20Bot-blueviolet.svg?style=for-the-badge"/>
 </p>
 <p align="center">
 <a href="https://github.com/FaizBastomi"><img src="https://img.shields.io/badge/AUTHOR-FAIZBASTOMI-red.svg?style=for-the-badge&logo=github"/></a>
