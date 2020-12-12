@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://cdn.discordapp.com/avatars/554086721688698882/480623d8d33313d2273f757333ab91c7.png?size=256" height="128" width="128"/>
+<img src="https://telegra.ph/file/bd5303420788277b282a0.jpg" height="180" width="180"/>
 </p>
 <p align="center">
 <img src="https://img.shields.io/badge/-Discord%20Bot-gray.svg?style=for-the-badge&logo=discord"/>
