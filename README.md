@@ -36,6 +36,7 @@ Simple NSFW Discord Bot.
 ### Clone this project
 ```sh
 git clone https://github.com/FaizBastomi/kaguya-bot.git
+cd kaguya-bot
 ```
 
 ### Install Depencies
