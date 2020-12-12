@@ -8,7 +8,7 @@
 <a href="https://github.com/FaizBastomi"><img src="https://img.shields.io/badge/AUTHOR-FAIZBASTOMI-red.svg?style=for-the-badge&logo=github"/></a>
 </p>
 <p align="center">
-<a href="https://www.codefactor.io/repository/github/faizbastomi/kaguya-bot"><img src="https://www.codefactor.io/repository/github/faizbastomi/kaguya-bot/badge" alt="CodeFactor" /></a>
+<a href="https://www.codefactor.io/repository/github/faizbastomi/kaguya-bot"><img src="https://www.codefactor.io/repository/github/faizbastomi/kaguya-bot/badge?style=flat-square" alt="CodeFactor" /></a>
 </p>
 
 <div align="center">
