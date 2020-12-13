@@ -61,18 +61,18 @@ Feel free to make a pull request.
 ## Feature
 | Command | Description | Status  |
 |:----------:|:--------------:|:---------:|
-|   NSFW    |   Random NSFW   |   Working   |
-|   Loli    |   Random Lolis    |   Working   |
-|   Hentai  |   Random Hentai     |   Working   |
-|   Neko    |   Random Nekonime   |   Working   |
-|   Randanime |   Random Anime Image    |   Working   |
-|   Trap    |   Random Trap   |   Working   |
-|   Help    |   Command List    |   Working   |
-|   Avatar    |   Show Member Avatar    |   Working   |
-|   Clear   |   Clear Message History   |   Working   |
-|   Userinfo    |   Show Member Statistic   |   Working   |
-|   Ping    |   Bot and API ping    |   Working   |
-|   Eval    |   Evaluate Command    |   Working   |
+|   NSFW    |   Random NSFW   |   ✅   |
+|   Loli    |   Random Lolis    |   ✅   |
+|   Hentai  |   Random Hentai     |   ✅   |
+|   Neko    |   Random Nekonime   |   ✅   |
+|   Randanime |   Random Anime Image    |   ✅   |
+|   Trap    |   Random Trap   |   ✅   |
+|   Help    |   Command List    |   ✅   |
+|   Avatar    |   Show Member Avatar    |   ✅   |
+|   Clear   |   Clear Message History   |   ✅   |
+|   Userinfo    |   Show Member Statistic   |   ✅   |
+|   Ping    |   Bot and API ping    |   ✅   |
+|   Eval    |   Evaluate Command    |   ✅   |
 
 ## Contributors
 <table>
