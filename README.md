@@ -59,7 +59,7 @@ Don't forget to copy-paste your error log.
 We welcome your contribution.🤝
 Feel free to make a pull request.
 
-## Feature
+## Features
 | Command | Description | Status  |
 |:----------:|:--------------:|:---------:|
 |   NSFW    |   Random NSFW   |   ✅   |
