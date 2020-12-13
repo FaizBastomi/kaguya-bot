@@ -74,6 +74,7 @@ Feel free to make a pull request.
 |   Userinfo    |   Show Member Statistic   |   ✅   |
 |   Ping    |   Bot and API ping    |   ✅   |
 |   Eval    |   Evaluate Command    |   ✅   |
+|   Math    |   Calculation Function    |   ✅    |
 
 ## Contributors
 <table>
