@@ -36,18 +36,18 @@ Simple NSFW Discord Bot.
 
 ### Clone this project
 ```sh
-git clone https://github.com/FaizBastomi/kaguya-bot.git
-cd kaguya-bot
+> git clone https://github.com/FaizBastomi/kaguya-bot.git
+> cd kaguya-bot
 ```
 
 ### Install Depencies
 ```sh
-npm install
+> npm install
 ```
 
 ### Run Bot
 ```sh
-npm start
+> npm start
 ```
 
 ### Error Found
