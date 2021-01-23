@@ -28,8 +28,8 @@ Simple NSFW Discord Bot.<br />
 Thanks to [CF's API](https://api.computerfreaker.cf)
 
 1. Fill all informations needed [here](https://github.com/FaizBastomi/kaguya-bot/blob/main/config.json)
-2. Tutorial how to get your [Bot Token](https://www.writebots.com/discord-bot-token/)
-3. Tutorial how to get your [Discord ID](https://bit.ly/39ZnsZZ)
+2. Tutorial how to get your <a href="https://www.writebots.com/discord-bot-token/" target="_blank">Bot Token</a>
+3. Tutorial how to get your <a href="https://bit.ly/39ZnsZZ" target="_blank">Discord ID</a>
 
 ### Pre-required
 1. Node.js [install here](https://nodejs.org/en/download)
