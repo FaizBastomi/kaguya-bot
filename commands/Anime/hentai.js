@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const axios = require('axios');
-const { UserAgent } = require('../config.json');
+const { UserAgent } = require('../../config.json');
 
 module.exports = {
     name: 'hentai',

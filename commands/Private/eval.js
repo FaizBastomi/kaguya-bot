@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const { owner } = require('../config.json')
+const { owner } = require('../../config.json')
 module.exports = {
     name: 'eval',
     description: '',
