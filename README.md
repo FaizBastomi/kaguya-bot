@@ -42,6 +42,7 @@ This Project Need NodeJS 12x
 Install the dependencies:
 ```sh
 > npm install
+> npm update
 ```
 
 ### Run
