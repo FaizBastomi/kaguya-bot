@@ -25,34 +25,32 @@
 <h1 align="center">Kaguya Bot</h1>
 
 Simple NSFW Discord Bot.<br />
-Thanks to [CF's API](https://api.computerfreaker.cf)
+Thanks to [CF's API](https://api.computerfreaker.cf) and [Tobz API](https://tobz-api.herokuapp.com)
 
 1. Fill all informations needed [here](https://github.com/FaizBastomi/kaguya-bot/blob/main/config.json)
 2. Tutorial how to get your <a href="https://www.writebots.com/discord-bot-token/" target="_blank">Bot Token</a>
 3. Tutorial how to get your <a href="https://bit.ly/39ZnsZZ" target="_blank">Discord ID</a>
 
-### Pre-required
-1. Node.js [install here](https://nodejs.org/en/download)
-2. Git [install here](https://git-scm.com/downloads)
+## Get Started
+This Project Need NodeJS 12x
 
-### Clone this project
+### Cloning
 ```sh
 > git clone https://github.com/FaizBastomi/kaguya-bot.git
 > cd kaguya-bot
 ```
-
-### Install Depencies
+Install the dependencies:
 ```sh
 > npm install
 ```
 
-### Run Bot
+### Run
 ```sh
 > npm start
 ```
 
 ### Error Found
-Let me know if you find error. Just make an issues, then i will fix it.
+Let me know if you find error. Just make an issues, then i will fix it.<br />
 Don't forget to copy-paste your error log.
 
 ### Contribution
@@ -68,6 +66,8 @@ Feel free to make a pull request.
 |   Hentai  |   Random Hentai     |   ✅   |
 |   Neko    |   Random Nekonime   |   ✅   |
 |   Randanime |   Random Anime Image    |   ✅   |
+|   Shota   |   Random Shota    |   ✅    |
+|   Husbu   |   Random Husbu    |   ✅    |
 |   Trap    |   Random Trap   |   ✅   |
 |   Help    |   Command List    |   ✅   |
 |   Avatar    |   Show Member Avatar    |   ✅   |
