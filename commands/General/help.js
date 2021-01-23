@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const { prefix } = require('../config.json')
+const { prefix } = require('../../config.json')
 module.exports = {
     name: 'help',
     aliases: ['h','menu','cmd'],

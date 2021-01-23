@@ -7,12 +7,19 @@ client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 client.prefix = prefix;
 
-const commandFiles = fs.readdirSync(`./commands`).filter(file => file.endsWith('.js'));
+const diri = [
+    "General",
+    "Anime",
+    "Private"
+]
 
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
-}
+diri.forEach(async (res) => {
+    const commandFiles = fs.readdirSync(`./commands/${res}`).filter(file => file.endsWith('.js'))
+    for (const file of commandFiles) {
+        const command = require(`./commands/${res}/${file}`)
+        client.commands.set(command.name, command)
+    }
+})
 
 client.login(TOKEN).catch(() => { console.log('Invaid TOKEN!') });
 
