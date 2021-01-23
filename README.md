@@ -22,9 +22,10 @@
 <a href="https://instagram.com/faiz_bastomy" target="_blank"><img src="https://img.shields.io/badge/Follow-Instagram-orange.svg?style=flat-square&logo=instagram"/></a>
 </p>
 
-# Kaguya-Bot
+<h1 align="center">Kaguya Bot</h1>
 
-Simple NSFW Discord Bot.
+Simple NSFW Discord Bot.<br />
+Thanks to [CF's API](https://api.computerfreaker.cf)
 
 1. Fill all informations needed [here](https://github.com/FaizBastomi/kaguya-bot/blob/main/config.json)
 2. Tutorial how to get your [Bot Token](https://www.writebots.com/discord-bot-token/)
@@ -56,7 +57,7 @@ Don't forget to copy-paste your error log.
 
 ### Contribution
 
-We welcome your contribution.🤝
+We welcome your contribution.🤝<br />
 Feel free to make a pull request.
 
 ## Features
