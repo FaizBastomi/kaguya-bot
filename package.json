@@ -1,7 +1,7 @@
 {
   "name": "Kaguya-Bot",
-  "version": "0.0.1",
-  "description": "Simple NSFW Discord Bot - Test",
+  "version": "10.0.0",
+  "description": "Simple NSFW Discord Bot",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
