@@ -71,6 +71,7 @@ Feel free to make a pull request.
 |   Shota   |   Random Shota    |   ✅    |
 |   Husbu   |   Random Husbu    |   ✅    |
 |   Trap    |   Random Trap   |   ✅   |
+|   Fetish    |   pick image from a given subreddit or random subreddit if there is no given subreddit    |   ✅    |
 |   Help    |   Command List    |   ✅   |
 |   Avatar    |   Show Member Avatar    |   ✅   |
 |   Clear   |   Clear Message History   |   ✅   |
