@@ -26,7 +26,7 @@
 
 Simple NSFW Discord Bot.<br />
 Thanks to [CF's API](https://api.computerfreaker.cf) and [Tobz API](https://tobz-api.herokuapp.com)<br />
-Read [changelog](https://github.com/FaizBastomi/kaguya-bot/blob/main/changelog.md)
+Read [changelog](https://github.com/FaizBastomi/kaguya-bot/blob/main/CHANGELOG.md)
 
 1. Fill all informations needed [here](https://github.com/FaizBastomi/kaguya-bot/blob/main/config.json)
 2. Tutorial how to get your <a href="https://www.writebots.com/discord-bot-token/" target="_blank">Bot Token</a>
