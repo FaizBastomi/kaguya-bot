@@ -6,7 +6,7 @@ module.exports = {
     name: "fetish",
     description: "Get image from random subreddit.",
     cooldown: 5,
-    usage: `${prefix}fetish [subreddit]`,
+    usage: `${prefix}fetish`,
     async execute(client, message, args) {
         if (!message.channel.nsfw) {
             message.channel.send('This command only can be execute on nsfw channel!')
