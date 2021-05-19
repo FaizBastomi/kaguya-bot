@@ -4,7 +4,7 @@ module.exports = {
     name: 'eval',
     description: '',
     async execute(client, message, args) {
-      if (!owner) return message.channel.send('Can\'t execute this command!')
+      if (message.author.id !== owner) return message.channel.send('Can\'t execute this command!')
       
       const msg = message;
       
