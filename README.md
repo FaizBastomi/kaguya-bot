@@ -64,12 +64,9 @@ Feel free to make a pull request.
 | Command | Description | Status  |
 |:----------:|:--------------:|:---------:|
 |   NSFW    |   Random NSFW   |   ✅   |
-|   Loli    |   Random Lolis    |   ✅   |
 |   Hentai  |   Random Hentai     |   ✅   |
 |   Neko    |   Random Nekonime   |   ✅   |
 |   Randanime |   Random Anime Image    |   ✅   |
-|   Shota   |   Random Shota    |   ✅    |
-|   Husbu   |   Random Husbu    |   ✅    |
 |   Trap    |   Random Trap   |   ✅   |
 |   Fetish    |   pick image from random subreddit    |   ✅    |
 |   Help    |   Command List    |   ✅   |
