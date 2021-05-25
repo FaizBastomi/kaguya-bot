@@ -12,7 +12,7 @@ module.exports = {
             message.channel.send('Please, provide the number!').then(msg => msg.delete({timeout: 3000}));
         } else {
             message.delete();
-        message.channel.bulkDelete(args[0]);
+        message.channel.bulkDelete(args[0], { filterOld: true });
         message.channel.send('Success!').then(msg => msg.delete({timeout: 3000})).catch((err) => { console.log(err.message) });
         }
     }
