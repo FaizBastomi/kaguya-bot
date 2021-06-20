@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const { fetchJson } = require('../Utils/fetcher')
+const { fetchJson } = require('../../Utils/fetcher')
 const { prefix } = require('../../config.json')
 
 module.exports = {

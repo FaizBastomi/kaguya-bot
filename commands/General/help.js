@@ -1,5 +1,7 @@
 const { MessageEmbed } = require('discord.js');
-const { prefix } = require('../../config.json')
+const { prefix } = require('../../config.json');
+const fs = require('fs');
+
 module.exports = {
     name: 'help',
     aliases: ['h','menu','cmd'],
@@ -28,13 +30,27 @@ module.exports = {
             
         } else {
         const data = [];
-        const { commands } = message.client;
-        data.push(`My prefix is **${prefix}**\nHere all my command:`);
-        data.push(commands.map(command => `\`${command.name}\``).join(', '));
-        data.push(`\nYou can do n!help [command name] to view detail of command`);
+        fs.readdirSync('./commands').forEach((dir) => {
+            const cmd = fs.readdirSync(`./commands/${dir}`).filter(file =>
+                file.endsWith('.js')
+            )
+            const cmds = cmd.map((cmd) => {
+                const file = require(`../../commands/${dir}/${cmd}`)
+                if (!file.name) return;
+                let name = file.name.replace('.js', '')
+                return `\`${name}\``
+            })
+            let obj = new Object();
+            obj = {
+                name: dir.toUpperCase(),
+                value: cmds.join(', ')
+            }
+            data.push(obj)
+        })
 
         const embed = new MessageEmbed()
-        .setDescription(data)
+        .setDescription(`My Commands List\nUse ${prefix}help followed by command name to get detail of command, e.g. ${prefix}help avatar.`)
+        .addFields(data)
         .setThumbnail(client.user.avatarURL())
         .setColor('BLUE')
         .setTimestamp()
