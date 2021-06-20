@@ -8,7 +8,7 @@ module.exports = {
     cooldown: 2,
     async execute(client, message, args) {
         if (!message.channel.nsfw) {
-            message.channel.send('This command only can be execute on nsfw channel!')
+            return message.channel.send('This command only can be execute on nsfw channel!')
         } else {
             axios.get('https://api.computerfreaker.cf/v1/nsfwneko', { headers: { 'User-Agent': `${UserAgent}`} } )
             .then((res) => {

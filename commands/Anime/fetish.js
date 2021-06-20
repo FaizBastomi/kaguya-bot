@@ -9,7 +9,7 @@ module.exports = {
     usage: `${prefix}fetish`,
     async execute(client, message, args) {
         if (!message.channel.nsfw) {
-            message.channel.send('This command only can be execute on nsfw channel!')
+            return message.channel.send('This command only can be execute on nsfw channel!')
         }
         const randSub = ['ecchi', 'lewdanimegirls', 'hentai', 'hentaifemdom', 'hentaiparadise', 'hentai4everyone', 'animearmpits', 'animefeets', 'animethighss', 'animebooty', 'biganimetiddies', 'animebellybutton', 'sideoppai', 'ahegao']
         const tag = randSub[Math.floor(Math.random() * randSub.length)]
