@@ -13,7 +13,7 @@
 
 <div align="center">
 <img src="https://img.shields.io/badge/Node-%3E%3D%2014x-green.svg?style=flat-square&logo=npm"/>
-<img src="https://img.shields.io/badge/❤️Maintened-YES-blue.svg?style=flat-square"/>
+<img src="https://img.shields.io/badge/❤️Maintened-IDK-red.svg?style=flat-square"/>
 <img src="https://img.shields.io/github/languages/top/FaizBastomi/kaguya-bot?style=flat-square"/>
 </div>
 
@@ -22,6 +22,7 @@
 <a href="https://instagram.com/faiz_bastomy" target="_blank"><img src="https://img.shields.io/badge/Follow-Instagram-orange.svg?style=flat-square&logo=instagram"/></a>
 </p>
 
+<h2 align="center">Recently Discord.JS updated to v13 and v12 is no more supported. So, I decide to temporarily stop maintain this project.</h2>
 <h1 align="center">Kaguya Bot</h1>
 
 Simple NSFW Discord Bot.<br />
