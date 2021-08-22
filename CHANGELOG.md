@@ -1,4 +1,12 @@
 ## Changelog
+
+- 22 August 2021<br />
+Updates
+
+|       Action      |
+|:------------------:|
+|       Update to discord.js v13        |
+
 - 19 May 2021<br />
 Delete and add
 

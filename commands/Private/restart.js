@@ -14,6 +14,6 @@ module.exports = {
                 console.log(err)
             }
         })
-        message.channel.send('sukses')
+        message.channel.send('success')
     }
 }
