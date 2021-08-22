@@ -3,12 +3,13 @@ const ms = require('ms')
 
 module.exports = {
     name: 'status',
-    aliases: ['stats','stat','info'],
+    aliases: ['stats', 'stat', 'info'],
+    category: 'general',
     description: 'Check Bot Status',
     async execute(client, message, args) {
         const embed = new discord.MessageEmbed()
-        .setTitle('Information')
-        .setDescription(`
+            .setTitle('Information')
+            .setDescription(`
 **Name**: ${client.user.username}
 **ID**: ${client.user.id}
 \`\`\`
@@ -18,6 +19,6 @@ Discord.js: ${discord.version}
 Uptime    : ${ms(client.uptime, { long: true })}
 \`\`\``)
 
-        message.channel.send(embed)
+        message.channel.send({ embeds: [embed] })
     }
 }

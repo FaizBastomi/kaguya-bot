@@ -1,25 +1,24 @@
 const Discord = require('discord.js');
 const { prefix, TOKEN } = require('./config.json');
-const fs = require('fs');
-const client = new Discord.Client();
+const client = new Discord.Client({ intents: ["GUILDS","GUILD_MESSAGES","GUILD_MEMBERS","GUILD_PRESENCES","GUILD_MESSAGE_REACTIONS"] });
 
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 client.prefix = prefix;
 
-const diri = [
-    "General",
-    "Anime",
-    "Private"
-]
-
-diri.forEach(async (res) => {
-    const commandFiles = fs.readdirSync(`./commands/${res}`).filter(file => file.endsWith('.js'))
-    for (const file of commandFiles) {
-        const command = require(`./commands/${res}/${file}`)
-        client.commands.set(command.name, command)
-    }
-})
+function readCmd() {
+    const fs = require('fs');
+    const dir = fs.readdirSync('./commands');
+    dir.forEach((dir) => {
+        const files = fs.readdirSync(`./commands/${dir}`).filter(file => file.endsWith('.js'))
+        for (let file of files) {
+            const cmd = require(`./commands/${dir}/${file}`)
+            client.commands.set(cmd.name, cmd)
+        }
+    })
+    console.log('Command Loaded')
+}
+readCmd();
 
 client.login(TOKEN).catch(() => { console.log('Invaid TOKEN!') });
 
@@ -28,13 +27,20 @@ client.once('ready', async () => {
     client.user.setPresence({
         status: "online"
     });
-    client.user.setActivity(`${prefix}help for more info!`, { type: "PLAYING" });
+    setInterval(() => {
+        const activity = [
+            { name: `${prefix}help for more info!`, type: "PLAYING" },
+            { name: "Made with 💝 for you.", type: "STREAMING", url: "https://www.youtube.com/watch?v=BR-aIzE3QI0" }
+        ];
+        const act2 = activity[Math.floor(Math.random() * activity.length)];
+        client.user.setActivity(act2);
+    }, 10*1000);
 })
 
 client.on('warn', info => console.log(info));
 client.on('error', console.error);
 
-client.on('message', async message => {
+client.on('messageCreate', async message => {
     if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm') return;
 
     const args = message.content.slice(prefix.length).trim().split(/ +/);

@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
     name: 'math',
     aliases: [],
+    category: 'general',
     description: 'Matth calculation',
     async execute(client, message, args) {
         if (!args[0]) return message.channel.send('You didn\'t provide any calculations!')
@@ -18,6 +19,6 @@ module.exports = {
         .addField('Output', `\`\`\`${resp}\`\`\``)
         .setTimestamp()
 
-        m.edit('Result!', { embed: embed })
+        m.edit({ content: 'Result!', embeds: [embed] })
     }
 }

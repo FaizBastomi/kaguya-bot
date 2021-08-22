@@ -1,10 +1,10 @@
 const { MessageEmbed } = require('discord.js');
 const { prefix } = require('../../config.json');
-const fs = require('fs');
 
 module.exports = {
     name: 'help',
-    aliases: ['h','menu','cmd'],
+    aliases: ['h', 'menu', 'cmd'],
+    category: 'general',
     description: 'Show all command',
     usage: `${prefix}help\n${prefix}help [command name]`,
     cooldown: 2,
@@ -19,44 +19,48 @@ module.exports = {
             if (command.description) data.push(`**Description**: ${command.description}`)
             if (command.usage) data.push(`**Usage**: ${command.usage}`)
             if (command.cooldown) data.push(`**Cooldown**: ${command.cooldown}`)
-            
+
             const embed = new MessageEmbed()
-            .setDescription(data)
-            .setColor('BLUE')
-            .setTimestamp()
-            .setFooter(message.author.username, message.author.avatarURL())
-            
-            message.channel.send(embed)
-            
+                .setDescription(data.join('\n'))
+                .setColor('BLUE')
+                .setTimestamp()
+                .setFooter(message.author.username, message.author.avatarURL())
+
+            message.channel.send({ embeds: [embed] })
+
         } else {
-        const data = [];
-        fs.readdirSync('./commands').forEach((dir) => {
-            const cmd = fs.readdirSync(`./commands/${dir}`).filter(file =>
-                file.endsWith('.js')
-            )
-            const cmds = cmd.map((cmd) => {
-                const file = require(`../../commands/${dir}/${cmd}`)
-                if (!file.name) return;
-                let name = file.name.replace('.js', '')
-                return `\`${name}\``
-            })
-            let obj = new Object();
-            obj = {
-                name: dir.toUpperCase(),
-                value: cmds.join(', ')
+            const { commands } = message.client;
+            const data = [];
+            const category = [];
+            const cmdKey = commands.keys();
+            for (let key of cmdKey) {
+                const cmd = commands.get(key);
+                if (!key) continue;
+                if (!cmd.category || cmd.category === 'private') continue;
+                if (Object.keys(category).includes(cmd.category)) category[cmd.category].push(cmd);
+                else {
+                    category[cmd.category] = [];
+                    category[cmd.category].push(cmd);
+                };
             }
-            data.push(obj)
-        })
+            const catKeys = Object.keys(category);
+            for (let cat of catKeys) {
+                data.push({
+                    name: cat.toUpperCase(),
+                    value: `${category[cat].map(cmd => `\`${cmd.name}\``).join(", ")}`,
+                    inline: true
+                })
+            }
 
-        const embed = new MessageEmbed()
-        .setDescription(`My Commands List\nUse ${prefix}help followed by command name to get detail of command, e.g. ${prefix}help avatar.`)
-        .addFields(data)
-        .setThumbnail(client.user.avatarURL())
-        .setColor('BLUE')
-        .setTimestamp()
-        .setFooter(message.author.username, message.author.avatarURL())
+            const embed = new MessageEmbed()
+                .setDescription(`My Commands List\nUse ${prefix}help followed by command name to get detail of command, e.g. ${prefix}help avatar.`)
+                .addFields(data)
+                .setThumbnail(client.user.avatarURL())
+                .setColor('BLUE')
+                .setTimestamp()
+                .setFooter(message.author.username, message.author.avatarURL())
 
-        message.channel.send(embed)
+            message.channel.send({ embeds: [embed] })
         }
     }
 }

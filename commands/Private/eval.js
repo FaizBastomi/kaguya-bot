@@ -2,6 +2,7 @@ const { MessageEmbed } = require('discord.js')
 const { owner } = require('../../config.json')
 module.exports = {
     name: 'eval',
+    category: 'private',
     description: '',
     async execute(client, message, args) {
       if (message.author.id !== owner) return message.channel.send('Can\'t execute this command!')
