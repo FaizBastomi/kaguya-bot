@@ -1,5 +1,5 @@
 {
-  "name": "Kaguya-Bot",
+  "name": "kaguya_bot",
   "version": "10.0.0",
   "description": "Simple NSFW Discord Bot",
   "main": "index.js",
@@ -17,9 +17,8 @@
   "license": "UNLICENSED",
   "dependencies": {
     "axios": "^0.21.1",
-    "discord.js": "^12.5.1",
-    "node-fetch": "^2.6.1",
-    "mathjs": "^8.1.0"
-  },
-  "devDependencies": {}
+    "discord.js": "^13.1.0",
+    "mathjs": "^9.4.4",
+    "node-fetch": "^2.6.1"
+  }
 }

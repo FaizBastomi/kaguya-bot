@@ -4,3 +4,6 @@ node_modules/
 # Lock Files
 *-lock.json
 *.lock
+
+# Config
+config.json

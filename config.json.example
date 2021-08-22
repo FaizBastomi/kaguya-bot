@@ -1,0 +1,6 @@
+{
+    "prefix": "n!",
+    "TOKEN": "BOT_TOKEN",
+    "owner": "YOUR_ID",
+    "UserAgent": "YOUR_CUSTOM_UA"
+}
