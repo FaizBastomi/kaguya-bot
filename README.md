@@ -12,14 +12,14 @@
 </p>
 
 <div align="center">
-<img src="https://img.shields.io/badge/Node-%3E%3D%2014x-green.svg?style=flat-square&logo=npm"/>
+<img src="https://img.shields.io/badge/Node-%3E%3D%2016.6x-43853D?style=flat-square&logo=node.js&logoColor=white"/>
 <img src="https://img.shields.io/badge/❤️Maintened-Yes-blue.svg?style=flat-square"/>
 <img src="https://img.shields.io/github/languages/top/FaizBastomi/kaguya-bot?style=flat-square"/>
 </div>
 
 <p align="center">
 <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FFaizBastomi%2Fkaguya-bot&count_bg=%2379C83D&title_bg=%23555555&icon=discord.svg&icon_color=%23876EFF&title=Visitor&edge_flat=true" alt="Visitor"/>
-<a href="https://instagram.com/faiz_bastomy" target="_blank"><img src="https://img.shields.io/badge/Follow-Instagram-orange.svg?style=flat-square&logo=instagram"/></a>
+<a href="https://instagram.com/faiz_bastomy" target="_blank"><img src="https://img.shields.io/badge/Instagram-Follow-orange.svg?style=flat-square&logo=instagram"/></a>
 </p>
 
 <h1 align="center">Kaguya Bot</h1>
@@ -80,10 +80,11 @@ Feel free to make a pull request.
 |   Math    |   Calculation Function    |   ✅    |
 
 ## Thanks to
-    - APIs
-        - [nekos.life](https://nekos.life)
-        - [CFs](http://computerfreaker.cf)
-        - [Tobz](http://tobz-api.herokuapp.com)
+
+   - APIs
+      - [nekos.life](https://nekos.life)
+      - [CFs](http://computerfreaker.cf)
+      - [Tobz](http://tobz-api.herokuapp.com)
 
 ## Contributors
 <table>
