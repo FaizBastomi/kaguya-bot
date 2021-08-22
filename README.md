@@ -35,7 +35,7 @@ Read [changelog](https://github.com/FaizBastomi/kaguya-bot/blob/main/CHANGELOG.m
 3. Tutorial how to get your <a href="https://bit.ly/39ZnsZZ" target="_blank">Discord ID</a>
 
 ## Get Started
-This Project Need NodeJS 16.6x
+This Project Need NodeJS 16.6x , [get here.](https://nodejs.org/en/download/current/)
 
 ### Cloning
 ```sh
