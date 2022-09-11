@@ -1,5 +1,13 @@
 ## Changelog
 
+- 11 September 2022<br />
+Updates
+
+|       Action      |
+|:-----------------:|
+|   Update to discord.js v14    |
+|   Updating all commands   |
+
 - 22 August 2021<br />
 Updates
 
