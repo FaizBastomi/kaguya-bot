@@ -12,7 +12,7 @@
 </p>
 
 <div align="center">
-<img src="https://img.shields.io/badge/Node-%3E%3D%2016.6x-43853D?style=flat-square&logo=node.js&logoColor=white"/>
+<img src="https://img.shields.io/badge/Node-%3E%3D%2017x-43853D?style=flat-square&logo=node.js&logoColor=white"/>
 <img src="https://img.shields.io/badge/❤️Maintened-Yes-blue.svg?style=flat-square"/>
 <img src="https://img.shields.io/github/languages/top/FaizBastomi/kaguya-bot?style=flat-square"/>
 </div>
