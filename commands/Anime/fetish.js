@@ -14,7 +14,7 @@ module.exports = {
 					{ name: "feets", value: "animefeets" },
 					{ name: "genshin", value: "genshinimpacthentai" },
 					{ name: "tiddies", value: "biganimetiddies" },
-					{ name: "bellybutton", value: "animebellybutton" },
+					{ name: "bellybutton", value: "animebellydancers" },
 					{ name: "ahegao", value: "ahegao" }
 				)
 		),
@@ -35,7 +35,7 @@ module.exports = {
 			"animefeets",
 			"animebooty",
 			"biganimetiddies",
-			"animebellybutton",
+			"animebellydancers",
 			"sideoppai",
 			"ahegao",
 		];
