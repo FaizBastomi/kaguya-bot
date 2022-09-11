@@ -1,79 +1,82 @@
-const Discord = require('discord.js');
-const { prefix, TOKEN } = require('./config.json');
-const client = new Discord.Client({ intents: ["GUILDS","GUILD_MESSAGES","GUILD_MEMBERS","GUILD_PRESENCES","GUILD_MESSAGE_REACTIONS"] });
+const { Client, GatewayIntentBits, Collection, ActivityType } = require("discord.js");
+const { TOKEN } = require("./config.json");
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.DirectMessages,
+		GatewayIntentBits.GuildPresences,
+		GatewayIntentBits.GuildMembers,
+	],
+});
+const fs = require("node:fs");
+const path = require("node:path");
 
-client.commands = new Discord.Collection();
-const cooldowns = new Discord.Collection();
-client.prefix = prefix;
+client.commands = new Collection();
+const cooldowns = new Collection();
 
 function readCmd() {
-    const fs = require('fs');
-    const dir = fs.readdirSync('./commands');
-    dir.forEach((dir) => {
-        const files = fs.readdirSync(`./commands/${dir}`).filter(file => file.endsWith('.js'))
-        for (let file of files) {
-            const cmd = require(`./commands/${dir}/${file}`)
-            client.commands.set(cmd.name, cmd)
-        }
-    })
-    console.log('Command Loaded')
+	const dir = fs.readdirSync(path.join(__dirname, "commands"));
+	dir.forEach((dir) => {
+		const files = fs.readdirSync(path.join(__dirname, "commands", dir)).filter((file) => file.endsWith(".js"));
+		for (let file of files) {
+			const cmd = require(path.join(__dirname, "commands", dir, file));
+			client.commands.set(cmd.name, cmd);
+		}
+	});
+	console.log("Command Loaded");
 }
 readCmd();
 
-client.login(TOKEN).catch(() => { console.log('Invaid TOKEN!') });
+/* Login */
+client.login(TOKEN).catch(() => {
+	console.log("Invaid TOKEN!");
+});
 
-client.once('ready', async () => {
-    console.log(`Ready!, login as ${client.user.username}`)
-    client.user.setPresence({
-        status: "online"
-    });
-    setInterval(() => {
-        const activity = [
-            { name: `${prefix}help for more info!`, type: "PLAYING" },
-            { name: "Made with 💝 for you.", type: "STREAMING", url: "https://www.youtube.com/watch?v=BR-aIzE3QI0" }
-        ];
-        const act2 = activity[Math.floor(Math.random() * activity.length)];
-        client.user.setActivity(act2);
-    }, 10*1000);
-})
+client.once("ready", async () => {
+	console.log(`Ready!, login as ${client.user.username}`);
+	client.user.setPresence({
+		status: "online",
+	});
+	client.user.setActivity({ name: `/help for more info!`, type: ActivityType.Playing });
+});
 
-client.on('warn', info => console.log(info));
-client.on('error', console.error);
+client.on("warn", (info) => console.log(info));
+client.on("error", console.error);
 
-client.on('messageCreate', async message => {
-    if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm') return;
+client.on("interactionCreate", async (interaction) => {
+	if (!interaction.isChatInputCommand()) return;
 
-    const args = message.content.slice(prefix.length).trim().split(/ +/);
-    const commandName = args.shift().toLowerCase();
-    const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+	const command = interaction.client.commands.get(interaction.commandName);
+	if (!command) return;
 
-    if (!command) return;
+	/* Cooldown things */
+	if (!cooldowns.has(command.name)) {
+		cooldowns.set(command.name, new Collection());
+	}
 
-    if (!cooldowns.has(command.name)) {
-        cooldowns.set(command.name, new Discord.Collection());
-    }
+	const now = Date.now();
+	const timestamps = cooldowns.get(command.name);
+	const cooldownAmount = (command.cooldown || 3) * 1000;
 
-    const now = Date.now();
-    const timestamps = cooldowns.get(command.name);
-    const cooldownAmount = (command.cooldown || 3) * 1000;
+	if (timestamps.has(interaction.user.id)) {
+		const expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
 
-    if (timestamps.has(message.author.id)) {
-        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+		if (now < expirationTime) {
+			const timeLeft = (expirationTime - now) / 1000;
+			return await interaction
+				.reply({ content: `Please wait ${timeLeft.toFixed(1)} second(s) until next command!` })
+				.then((it) => {
+					it.interaction.deleteReply();
+				});
+		}
+	}
 
-        if (now < expirationTime) {
-            const timeLeft = (expirationTime - now) / 1000;
-            return (await message.reply(`Please wait ${timeLeft.toFixed(1)} second(s) until next command!`))
-            .then(msg => msg.delete({timeout: 2000}));
-        }
-    }
+	timestamps.set(interaction.user.id, now);
+	setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
 
-    timestamps.set(message.author.id, now);
-    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-
-try {
-    command.execute(client, message, args)
-} catch (error) {
-	console.error(error);
-	message.reply('there was an error trying to execute that command!');
-}
+	try {
+		command.exec(interaction);
+	} catch (e) {
+		console.error(e);
+	}
 });

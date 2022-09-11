@@ -1,20 +1,17 @@
-const { MessageEmbed } = require('discord.js');
-const anime = require('random-anime');
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const anime = require("random-anime");
 
 module.exports = {
-    name: 'anime',
-    aliases: ['randanime', 'anim'],
-    category: 'anime',
-    description: 'Send Random Anime Image',
-    cooldown: 2,
-    async execute(client, message, args) {
-        const embed = new MessageEmbed()
-            .setImage(anime.anime())
-            .setColor('BLUE')
-            .setTimestamp()
-            .setFooter('Random Anime')
+	data: new SlashCommandBuilder().setName("anime").setDescription("Get random anime image"),
+	name: "anime",
+	cooldown: 2,
+	async exec(interaction) {
+		let embed = new EmbedBuilder()
+			.setImage(anime.anime())
+			.setColor("Blue")
+			.setTimestamp()
+			.setFooter({ text: "Random Anime" });
 
-        message.channel.send({ embeds: [embed] })
-    }
-
-}
+		interaction.reply({ embeds: [embed] });
+	},
+};

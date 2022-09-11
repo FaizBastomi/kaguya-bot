@@ -1,20 +1,21 @@
-const { prefix } = require('../../config.json');
+const { SlashCommandBuilder } = require("discord.js");
+const wait = require("node:timers/promises").setTimeout;
 
 module.exports = {
-    name: 'clear',
-    aliases: ['c', 'del', 'delete'],
-    category: 'general',
-    description: 'Delete amount of message',
-    usage: `${prefix}clear \`10\``,
-    cooldown: 2,
-    async execute(client, message, args) {
-        if (!args.length) {
-            setTimeout(() => { message.delete() }, 3000);
-            message.channel.send('Please, provide the number!').then(msg => setTimeout(() => { msg.delete() }, 3000));
-        } else {
-            message.delete();
-            message.channel.bulkDelete(args[0], { filterOld: true });
-            message.channel.send('Success!').then(msg => setTimeout(() => { msg.delete() }, 3000)).catch((err) => { console.log(err.message) });
-        }
-    }
-}
+	data: new SlashCommandBuilder()
+		.setName("clear")
+		.setDescription("Bulk delete message in channel")
+		.addNumberOption((option) =>
+			option.setName("number").setDescription("Number of message e.g 20").setRequired(true)
+		),
+	name: "clear",
+	cooldown: 2,
+	async exec(interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
+		let total = interaction.options.getNumber("number");
+		await interaction.channel.bulkDelete(total, true);
+
+		interaction.editReply("DONE!");
+	},
+};

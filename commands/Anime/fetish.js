@@ -1,31 +1,63 @@
-const { MessageEmbed } = require('discord.js')
-const { fetchJson } = require('../../Utils/fetcher')
-const { prefix } = require('../../config.json')
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const { fetchJson } = require("../../Utils/fetcher");
 
 module.exports = {
-    name: "fetish",
-    description: "Get image from random subreddit.",
-    category: 'anime',
-    cooldown: 5,
-    usage: `${prefix}fetish`,
-    async execute(client, message, args) {
-        if (!message.channel.nsfw) {
-            return message.channel.send('This command only can be execute on nsfw channel!')
-        }
-        const randSub = ['ecchi', 'lewdanimegirls', 'hentai', 'hentaifemdom', 'hentaiparadise', 'hentai4everyone', 'animearmpits', 'animefeets', 'animethighss', 'animebooty', 'biganimetiddies', 'animebellybutton', 'sideoppai', 'ahegao']
-        const tag = randSub[Math.floor(Math.random() * randSub.length)]
+	data: new SlashCommandBuilder()
+		.setName("fetish")
+		.setDescription("Get image from subreddit")
+		.addStringOption((option) =>
+			option
+				.setName("category")
+				.setDescription("fetish category")
+				.addChoices(
+					{ name: "armpits", value: "animearmpits" },
+					{ name: "feets", value: "animefeets" },
+					{ name: "genshin", value: "genshinimpacthentai" },
+					{ name: "tiddies", value: "biganimetiddies" },
+					{ name: "bellybutton", value: "animebellybutton" },
+					{ name: "ahegao", value: "ahegao" }
+				)
+		),
+	name: "fetish",
+	cooldown: 5,
+	async exec(interaction) {
+		if (!interaction.channel.nsfw) {
+			return interaction.reply({ content: "This command only can be execute on nsfw channel!", ephemeral: true });
+		}
+		const randSub = [
+			"ecchi",
+			"lewdanimegirls",
+			"hentai",
+			"hentaifemdom",
+			"hentaiparadise",
+			"hentai4everyone",
+			"animearmpits",
+			"animefeets",
+			"animebooty",
+			"biganimetiddies",
+			"animebellybutton",
+			"sideoppai",
+			"ahegao",
+		];
+		let tag = interaction.options.getString("category") || randSub[Math.floor(Math.random() * randSub.length)];
 
-        const m = await message.channel.send(`**Search image from ${tag}...**`)
-        fetchJson(`https://meme-api.herokuapp.com/gimme/${tag}`).then(async (res) => {
-            const { title, url, author } = res
-            const embed = new MessageEmbed()
-                .setTitle(title)
-                .setImage(url)
-                .setColor('BLUE')
-                .setTimestamp()
-                .setFooter('Some Fetish')
+		await interaction.reply(`**Search image from ${tag}...**`);
+		let result = await fetchJson(`https://meme-api.herokuapp.com/gimme/${tag}`),
+			embed = new EmbedBuilder()
+				.setAuthor({ name: result.author, url: "https://reddit.com/u/" + result.author })
+				.setTitle(result.title)
+				.setURL(result.postLink)
+				.setImage(result.url)
+				.setColor("Red")
+				.setTimestamp();
+		row = new ActionRowBuilder().addComponents(
+			new ButtonBuilder().setLabel("Post").setURL(`${result.postLink}`).setStyle(ButtonStyle.Link),
+			new ButtonBuilder()
+				.setLabel("Author")
+				.setURL(`https://reddit.com/u/${result.author}`)
+				.setStyle(ButtonStyle.Link)
+		);
 
-            return m.edit({ content: 'Here.', embeds: [embed] })
-        })
-    }
-}
+		interaction.editReply({ content: "", embeds: [embed], components: [row] });
+	},
+};

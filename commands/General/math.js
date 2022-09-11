@@ -1,24 +1,29 @@
-const math = require('mathjs')
-const { MessageEmbed } = require('discord.js')
+const math = require("mathjs");
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+
 module.exports = {
-    name: 'math',
-    aliases: [],
-    category: 'general',
-    description: 'Matth calculation',
-    async execute(client, message, args) {
-        if (!args[0]) return message.channel.send('You didn\'t provide any calculations!')
-        const m = await message.channel.send('Calculating...')
+	data: new SlashCommandBuilder()
+		.setName("math")
+		.setDescription("Doing math calculation")
+		.addStringOption((option) =>
+			option.setName("input").setDescription("Input calculus operation e.g 10*20").setRequired(true)
+		),
+	name: "math",
+	cooldown: 2,
+	async exec(interaction) {
+		await interaction.deferReply();
 
-        var resp;
-        resp = math.evaluate(args.join(' '))
+		let calculus = interaction.options.getString("input"),
+			evaluation = math.evaluate(calculus),
+			embed = new EmbedBuilder()
+				.setTitle("Result")
+				.setColor("Blue")
+				.addFields([
+					{ name: "input", value: "```" + calculus + "```" },
+					{ name: "output", value: "```" + evaluation + "```" },
+				])
+				.setTimestamp();
 
-        const embed = new MessageEmbed()
-        .setAuthor('Math Calculation')
-        .setColor('BLUE')
-        .addField('Input', `\`\`\`${args.join(' ')}\`\`\``)
-        .addField('Output', `\`\`\`${resp}\`\`\``)
-        .setTimestamp()
-
-        m.edit({ content: 'Result!', embeds: [embed] })
-    }
-}
+		interaction.editReply({ embeds: [embed] });
+	},
+};

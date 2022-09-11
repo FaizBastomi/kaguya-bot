@@ -1,23 +1,21 @@
-const { MessageEmbed } = require('discord.js');
-const anime = require('random-anime');
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const anime = require("random-anime");
 
 module.exports = {
-    name: 'nsfw',
-    description: 'Send Random Hentai Image',
-    category: 'anime',
-    cooldown: 2,
-    async execute(client, message, args) {
-        if (!message.channel.nsfw) {
-            return message.channel.send('This command only can be execute on nsfw channel!')
-        } else {
-            const embed = new MessageEmbed()
-                .setImage(anime.nsfw())
-                .setColor('BLUE')
-                .setTimestamp()
-                .setFooter('Random NSFW')
+	data: new SlashCommandBuilder().setName("nsfw").setDescription("Get random NSFW anime image"),
+	name: "nsfw",
+	cooldown: 2,
+	async exec(interaction) {
+		if (!interaction.channel.nsfw) {
+			return interaction.reply({ content: "This command only can be execute on nsfw channel!", ephemeral: true });
+		}
 
-            message.channel.send({ embeds: [embed] })
-        }
-    }
+		let embed = new EmbedBuilder()
+			.setImage(anime.nsfw())
+			.setColor("Red")
+			.setTimestamp()
+			.setFooter({ text: "Random NSFW" });
 
-}
+		interaction.reply({ embeds: [embed] });
+	},
+};

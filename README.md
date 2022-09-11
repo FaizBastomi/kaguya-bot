@@ -35,7 +35,7 @@ Read [changelog](https://github.com/FaizBastomi/kaguya-bot/blob/main/CHANGELOG.m
 3. Tutorial how to get your <a href="https://bit.ly/39ZnsZZ" target="_blank">Discord ID</a>
 
 ## Get Started
-This Project Need NodeJS 16.6x , [get here.](https://nodejs.org/en/download/current/)
+This Project Need NodeJS 17x , [get here.](https://nodejs.org/en/download/current/)
 
 ### Cloning
 ```sh
@@ -49,6 +49,14 @@ Install the dependencies:
 ```
 
 ### Run
+
+1. First deploy all commands to discord
+```sh
+> node deploy-commands.js
+```
+> Note: Run this file once when you've just created a discord bot and run it again if you make changes to SlashCommandBuilder or you create a new command for the bot.
+
+2. Run Bot
 ```sh
 > npm start
 ```
@@ -66,17 +74,11 @@ Feel free to make a pull request.
 | Command | Description | Status  |
 |:----------:|:--------------:|:---------:|
 |   NSFW    |   Random NSFW   |   ✅   |
-|   Hentai  |   Random Hentai     |   ✅   |
-|   Neko    |   Random Nekonime   |   ✅   |
 |   Randanime |   Random Anime Image    |   ✅   |
-|   Trap    |   Random Trap   |   ✅   |
 |   Fetish    |   pick image from random subreddit    |   ✅    |
-|   Help    |   Command List    |   ✅   |
 |   Avatar    |   Show Member Avatar    |   ✅   |
 |   Clear   |   Clear Message History   |   ✅   |
-|   Userinfo    |   Show Member Statistic   |   ✅   |
-|   Ping    |   Bot and API ping    |   ✅   |
-|   Eval    |   Evaluate Command    |   ✅   |
+|   User    |   Show Member Statistic   |   ✅   |
 |   Math    |   Calculation Function    |   ✅    |
 
 ## Thanks to

@@ -1,24 +1,27 @@
-const discord = require('discord.js');
-const ms = require('ms')
+const { EmbedBuilder, SlashCommandBuilder, version } = require("discord.js");
+const ms = require("ms");
 
 module.exports = {
-    name: 'status',
-    aliases: ['stats', 'stat', 'info'],
-    category: 'general',
-    description: 'Check Bot Status',
-    async execute(client, message, args) {
-        const embed = new discord.MessageEmbed()
-            .setTitle('Information')
-            .setDescription(`
-**Name**: ${client.user.username}
-**ID**: ${client.user.id}
+	data: new SlashCommandBuilder().setName("status").setDescription("Bot Status"),
+	name: "status",
+	async exec(interaction) {
+		await interaction.deferReply();
+
+		let embed = new EmbedBuilder()
+			.setTitle("Information")
+			.setDescription(
+				`
+**Name**: ${interaction.client.user.username}
+**ID**: ${interaction.client.user.id}
 \`\`\`
 Memory    : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
 Node.js   : ${process.version}
-Discord.js: ${discord.version}
-Uptime    : ${ms(client.uptime, { long: true })}
-\`\`\``)
+Discord.js: ${version}
+Uptime    : ${ms(interaction.client.uptime, { long: true })}
+\`\`\``
+			)
+			.setTimestamp();
 
-        message.channel.send({ embeds: [embed] })
-    }
-}
+		interaction.editReply({ embeds: [embed] });
+	},
+};
