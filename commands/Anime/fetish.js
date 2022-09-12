@@ -29,7 +29,6 @@ module.exports = {
 			"lewdanimegirls",
 			"hentai",
 			"hentaifemdom",
-			"hentaiparadise",
 			"hentai4everyone",
 			"animearmpits",
 			"animefeets",
