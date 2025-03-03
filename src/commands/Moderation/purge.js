@@ -65,7 +65,7 @@ class PurgeCommands extends Subcommand {
 		const amount = parseInt(amountOption) > 1 ? parseInt(amountOption) + 1 : parseInt(amountOption);
 
 		if (isNaN(amount) || amount < 2 || amount > MessageLimits.MaximumMessagesToBulkDelete) {
-			return interaction.editReply(`Please provide a number between 2 and ${MessageLimits.MaximumMessagesToBulkDelete}`).then((msg) => {
+			return interaction.reply(`Please provide a number between 2 and ${MessageLimits.MaximumMessagesToBulkDelete}`).then((msg) => {
 				setTimeout(async () => {
 					await msg.delete();
 				}, 8 * 1000);
@@ -101,8 +101,8 @@ class PurgeCommands extends Subcommand {
 			const user = interaction.options.getUser('user');
 			const amount = parseInt(amountOption) > 1 ? parseInt(amountOption) + 1 : 100;
 
-			if (isNaN(amount) || amount < 2 || amount > MessageLimits.MaximumMessagesToBulkDelete) {
-				return interaction.editReply({
+			if (isNaN(amount) || amount > MessageLimits.MaximumMessagesToBulkDelete) {
+				return interaction.reply({
 					content: `Please provide a number between 2 and ${MessageLimits.MaximumMessagesToBulkDelete}`,
 					flags: MessageFlags.Ephemeral
 				});
@@ -112,6 +112,14 @@ class PurgeCommands extends Subcommand {
 			const filteredMessages = messages.filter(
 				(msg) => msg.author.id === user.id && Date.now() - msg.createdTimestamp < 14 * 24 * 60 * 60 * 1000
 			);
+
+			if (filteredMessages.size < 1) {
+				return interaction.editReply('No messages to delete').then((msg) => {
+					setTimeout(async () => {
+						await msg.delete();
+					}, 8 * 1000);
+				});
+			}
 
 			await interaction.channel.bulkDelete(filteredMessages, true);
 
