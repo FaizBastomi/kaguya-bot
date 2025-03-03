@@ -1,6 +1,6 @@
 const { MessageLimits } = require('@sapphire/discord-utilities');
 const { Subcommand } = require('@sapphire/plugin-subcommands');
-const { MessageFlags } = require('discord.js');
+const { MessageFlags, PermissionsBitField } = require('discord.js');
 
 const { config } = require('../../index');
 
@@ -24,6 +24,7 @@ class PurgeCommands extends Subcommand {
 				builder //
 					.setName(this.name)
 					.setDescription(this.description)
+					.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
 					.addSubcommand((subcommand) =>
 						subcommand //
 							.setName('all')
@@ -60,30 +61,36 @@ class PurgeCommands extends Subcommand {
 	}
 
 	async chatPurgeAll(interaction) {
-		await interaction.deferReply();
-
 		const amountOption = interaction.options.getString('amount');
-		const amount = parseInt(amountOption) + 1;
+		const amount = parseInt(amountOption) > 1 ? parseInt(amountOption) + 1 : parseInt(amountOption);
 
 		if (isNaN(amount) || amount < 2 || amount > MessageLimits.MaximumMessagesToBulkDelete) {
-			return interaction.reply({
-				content: `Please provide a number between 2 and ${MessageLimits.MaximumMessagesToBulkDelete}`,
-				flags: MessageFlags.Ephemeral
+			return interaction.editReply(`Please provide a number between 2 and ${MessageLimits.MaximumMessagesToBulkDelete}`).then((msg) => {
+				setTimeout(async () => {
+					await msg.delete();
+				}, 8 * 1000);
 			});
 		}
 
 		const messages = await interaction.channel.messages.fetch({ limit: amount });
-		const filteredMessages = messages.filter(
-			(msg) => msg.author.id !== interaction.client.id && Date.now() - msg.createdTimestamp < 14 * 24 * 60 * 60 * 1000
-		);
+		const filteredMessages = messages.filter((msg) => Date.now() - msg.createdTimestamp < 14 * 24 * 60 * 60 * 1000);
+
+		await interaction.deferReply();
+
+		if (filteredMessages.size < 1) {
+			return interaction.editReply('No messages to delete').then((msg) => {
+				setTimeout(async () => {
+					await msg.delete();
+				}, 8 * 1000);
+			});
+		}
 
 		await interaction.channel.bulkDelete(filteredMessages, true);
 
-		return interaction.editReply(`Successfully purged **${filteredMessages.size}** messages!`).then((msg) => {
-			setTimeout(() => {
-				msg.delete();
-			}, 3 * 1000);
-		});
+		const reply = await interaction.editReply(`Successfully purged **${filteredMessages.size}** messages!`);
+		setTimeout(async () => {
+			return reply.delete();
+		}, 8 * 1000);
 	}
 
 	async chatPurgeUser(interaction) {
@@ -92,7 +99,7 @@ class PurgeCommands extends Subcommand {
 
 			const amountOption = interaction.options.getString('amount');
 			const user = interaction.options.getUser('user');
-			const amount = amountOption ? parseInt(amountOption) + 1 : 100;
+			const amount = parseInt(amountOption) > 1 ? parseInt(amountOption) + 1 : 100;
 
 			if (isNaN(amount) || amount < 2 || amount > MessageLimits.MaximumMessagesToBulkDelete) {
 				return interaction.editReply({
@@ -108,11 +115,10 @@ class PurgeCommands extends Subcommand {
 
 			await interaction.channel.bulkDelete(filteredMessages, true);
 
-			return interaction.editReply(`Successfully purged **${filteredMessages.size}** messages from **${user.tag}**!`).then((msg) => {
-				setTimeout(() => {
-					msg.delete();
-				}, 3 * 1000);
-			});
+			const reply = await interaction.editReply(`Successfully purged **${filteredMessages.size}** messages from **${user.tag}**!`);
+			setTimeout(async () => {
+				return reply.delete();
+			}, 8 * 1000);
 		} catch (error) {
 			console.error(error);
 		}

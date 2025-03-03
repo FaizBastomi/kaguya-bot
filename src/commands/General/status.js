@@ -1,4 +1,5 @@
 const ms = require('ms');
+const os = require('os');
 
 const { Command } = require('@sapphire/framework');
 const { EmbedBuilder, version } = require('discord.js');
@@ -36,13 +37,16 @@ class StatusCommand extends Command {
 				`
 **Name**: ${interaction.client.user.username}
 **ID**: ${interaction.client.user.id}
-\`\`\`
-Memory    : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
-Node.js   : ${process.version}
-Discord.js: ${version}
-Uptime    : ${ms(interaction.client.uptime, { long: true })}
-\`\`\`
 `
+			)
+			.addFields(
+				{
+					name: 'Memory (used/free/total)',
+					value: `${formatBytes(process.memoryUsage().heapUsed)} / ${formatBytes(os.freemem())} / ${formatBytes(os.totalmem())}`
+				},
+				{ name: 'Node.js', value: process.version, inline: true },
+				{ name: 'Discord.js', value: version, inline: true },
+				{ name: 'Uptime', value: ms(interaction.client.uptime, { long: true }), inline: true }
 			)
 			.setTimestamp();
 
@@ -53,3 +57,20 @@ Uptime    : ${ms(interaction.client.uptime, { long: true })}
 module.exports = {
 	StatusCommand
 };
+
+/**
+ * Converts bytes to a human-readable string representation (KB, MB, GB, TB)
+ * @param {number} bytes - The number of bytes to format
+ * @param {number} decimals - Number of decimal places (default: 1)
+ * @returns {string} Formatted string with appropriate unit
+ */
+function formatBytes(bytes, decimals = 1) {
+	if (bytes === 0) return '0 Bytes';
+
+	const k = 1024;
+	const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+	const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+	return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
+}
