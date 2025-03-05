@@ -58,6 +58,7 @@ Feel free to make a pull request.
 | Status  |      Bot Status       |   ✅   |
 |  Purge  | Clear Message History |   ✅   |
 |  Math   | Calculation Function  |   ✅   |
+|  Nuke   |    Nuke a Channel     |   ✅   |
 
 ## Contributors
 
