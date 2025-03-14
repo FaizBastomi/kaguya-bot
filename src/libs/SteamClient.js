@@ -31,7 +31,7 @@ async function checkSteamAccount(username, password) {
 					name: client.accountInfo?.name || null,
 					country: client.accountInfo?.country || null
 				},
-				emailInfo: client.emailInfo ? { address: client.emailInfo.adress, validated: client.emailInfo.validated } : null,
+				emailInfo: client.emailInfo ? { address: client.emailInfo.address, validated: client.emailInfo.validated } : null,
 				limitations: {
 					limited,
 					communityBanned,
