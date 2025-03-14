@@ -22,7 +22,10 @@ class CommandRegistry extends Listener {
 		}
 
 		config.data = config.saveAndReloadConfig(raw);
-		this.container.stores.get('commands').loadAll();
+		console.log('Will reload commands in 5 seconds');
+		setTimeout(() => {
+			this.container.stores.get('commands').loadAll();
+		}, 5 * 1000);
 	}
 }
 
