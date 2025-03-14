@@ -9,7 +9,7 @@ class SteamCommands extends Subcommand {
 		super(ctx, {
 			...options,
 			name: 'steam',
-			description: "Check a user's Steam profile",
+			description: 'Check a user Steam profile',
 			subcommands: [{ name: 'check', chatInputRun: 'checkSteamAccount' }]
 		});
 	}
@@ -54,13 +54,14 @@ class SteamCommands extends Subcommand {
 			console.log(accountData);
 			const dataEmbed = new EmbedBuilder() //
 				.setTitle('Steam Account Info')
+				.setURL(`https://steamcommunity.com/profiles/${accountData.steamID}`)
 				.setDescription(`User: **${accountData.accountInfo.name}**`)
 				.setColor('#03e3a3')
 				.setFields(
 					{ name: 'Steam ID', value: accountData.steamID, inline: true },
 					{ name: '🌐 Country', value: accountData.accountInfo.country || 'Unknown', inline: true },
 					{ name: '✉️ Email Address', value: accountData.emailInfo?.address || 'Unknown', inline: true },
-					{ name: 'Email Validated', value: accountData.emailInfo?.validated ? 'yes' : 'no', inline: true },
+					{ name: 'Email Validated', value: accountData.emailInfo?.validated ? 'yes' : 'no' },
 					{ name: '⛔ Limited', value: accountData.limitations.limited ? 'yes' : 'no', inline: true },
 					{ name: '🚫 Community Banned', value: accountData.limitations.communityBanned ? 'yes' : 'no', inline: true },
 					{ name: '🔒 Locked', value: accountData.limitations.locked ? 'yes' : 'no', inline: true }

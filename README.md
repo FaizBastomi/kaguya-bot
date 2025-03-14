@@ -53,12 +53,13 @@ Feel free to make a pull request.
 
 ## Features
 
-| Command |      Description      | Status |
-| :-----: | :-------------------: | :----: |
-| Status  |      Bot Status       |   ✅   |
-|  Purge  | Clear Message History |   ✅   |
-|  Math   | Calculation Function  |   ✅   |
-|  Nuke   |    Nuke a Channel     |   ✅   |
+| Command |       Description        | Status |
+| :-----: | :----------------------: | :----: |
+| Status  |        Bot Status        |   ✅   |
+|  Math   |   Calculation Function   |   ✅   |
+|  Nuke   |      Nuke a Channel      |   ✅   |
+|  Purge  |  Clear Message History   |   ✅   |
+|  Steam  | Check User Steam Profile |   ✅   |
 
 ## Contributors
 
