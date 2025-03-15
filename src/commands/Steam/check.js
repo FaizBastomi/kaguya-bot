@@ -1,5 +1,5 @@
 const { Subcommand } = require('@sapphire/plugin-subcommands');
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, ApplicationIntegrationType } = require('discord.js');
 const { checkSteamAccount } = require('../../libs/SteamClient');
 
 const { config } = require('../../index');
@@ -10,7 +10,7 @@ class SteamCommands extends Subcommand {
 			...options,
 			name: 'steam',
 			description: 'Check a user Steam profile',
-			subcommands: [{ name: 'check', chatInputRun: 'checkSteamAccount' }]
+			subcommands: [{ name: 'check', chatInputRun: 'steamCheckAccount' }]
 		});
 	}
 
@@ -20,10 +20,11 @@ class SteamCommands extends Subcommand {
 				builder //
 					.setName(this.name)
 					.setDescription(this.description)
-					.addSubcommand((subcommand) =>
-						subcommand //
+					.setIntegrationTypes([ApplicationIntegrationType.UserInstall, ApplicationIntegrationType.GuildInstall])
+					.addSubcommand((command) =>
+						command //
 							.setName('check')
-							.setDescription("Check a user's Steam profile")
+							.setDescription('Check a user Steam profile')
 							.addStringOption((option) =>
 								option //
 									.setName('username')
@@ -37,6 +38,7 @@ class SteamCommands extends Subcommand {
 									.setRequired(true)
 							)
 					),
+
 			{
 				idHints: config.data?.[this.name + 'ID'] || '',
 				registerCommandIfMissing: true
@@ -44,14 +46,13 @@ class SteamCommands extends Subcommand {
 		);
 	}
 
-	async checkSteamAccount(interaction) {
+	async steamCheckAccount(interaction) {
 		const username = interaction.options.getString('username');
 		const password = interaction.options.getString('password');
 
 		const replied = await interaction.reply('🔍 Checking the account...');
 		try {
 			const accountData = await checkSteamAccount(username, password);
-			console.log(accountData);
 			const dataEmbed = new EmbedBuilder() //
 				.setTitle('Steam Account Info')
 				.setURL(`https://steamcommunity.com/profiles/${accountData.steamID}`)
@@ -70,7 +71,6 @@ class SteamCommands extends Subcommand {
 
 			return replied.edit({ content: '', embeds: [dataEmbed] });
 		} catch (error) {
-			console.error(error);
 			return replied.edit(`Failed to log into Steam: \`${error.message}\` ❌`);
 		}
 	}

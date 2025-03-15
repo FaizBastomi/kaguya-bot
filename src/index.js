@@ -1,7 +1,7 @@
 require('dotenv').config({ path: './.env' });
 require('@sapphire/plugin-hmr/register');
 const { SapphireClient, LogLevel } = require('@sapphire/framework');
-const { GatewayIntentBits } = require('discord.js');
+const { GatewayIntentBits, Partials } = require('discord.js');
 
 const Config = require('../config');
 
@@ -11,9 +11,11 @@ const client = new SapphireClient({
 		GatewayIntentBits.MessageContent,
 		GatewayIntentBits.GuildMembers,
 		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.GuildModeration
+		GatewayIntentBits.GuildModeration,
+		GatewayIntentBits.DirectMessages
 	],
 	logger: { level: LogLevel.Debug },
+	partials: [Partials.Channel],
 	hmr: {
 		enabled: true
 	}
