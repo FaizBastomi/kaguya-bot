@@ -38,7 +38,6 @@ class SteamCommands extends Subcommand {
 									.setRequired(true)
 							)
 					),
-
 			{
 				idHints: config.data?.[this.name + 'ID'] || '',
 				registerCommandIfMissing: true
