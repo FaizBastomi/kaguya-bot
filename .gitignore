@@ -1,8 +1,2 @@
-# Env
-.env
-
-# Modules
 node_modules/
-
-# Config
-config.json
+.env

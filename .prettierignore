@@ -1,12 +1,6 @@
 # modules
 node_modules
 
-# config
-config.json
-
-# session
-*session*
-
 # package
 package.json
 

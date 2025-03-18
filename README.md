@@ -14,8 +14,6 @@ Read [changelog](https://github.com/FaizBastomi/kaguya-bot/blob/main/CHANGELOG.m
     - Rename `.env.example` to `.env`
     - Fill all needed.
 
-> APPID: is your bot user ID
-
 2. Tutorial how to get your <a href="https://www.writebots.com/discord-bot-token/" target="_blank">Bot Token</a>
 
 ## Get Started
@@ -37,8 +35,26 @@ Install the dependencies:
 
 ### Run
 
+**Development**
 ```sh
-> npm start
+npm run dev
+```
+
+**Production**
+```sh
+# linux
+export NODE_ENV=production && npm run prod
+```
+```ps1
+# windows (CMD)
+set NODE_ENV=production && npm run prod
+# or Powershell
+$env:NODE_ENV="production"; npm run prod
+```
+
+### Format the Code
+```sh
+npm run format
 ```
 
 ### Error Found
