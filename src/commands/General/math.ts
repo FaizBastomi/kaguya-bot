@@ -9,8 +9,12 @@ import { ApplicationIntegrationType, EmbedBuilder, InteractionContextType } from
 })
 export class MathCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {
-		const integrationTypes: ApplicationIntegrationType[] = [ApplicationIntegrationType.GuildInstall];
-		const contexts: InteractionContextType[] = [InteractionContextType.Guild];
+		const integrationTypes: ApplicationIntegrationType[] = [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall];
+		const contexts: InteractionContextType[] = [
+			InteractionContextType.Guild,
+			InteractionContextType.BotDM,
+			InteractionContextType.PrivateChannel
+		];
 
 		registry.registerChatInputCommand((builder) =>
 			builder //
