@@ -71,7 +71,6 @@ Feel free to make a pull request.
 
 | Command |       Description        | Status |
 | :-----: | :----------------------: | :----: |
-| Status  |        Bot Status        |   ✅   |
 |  Math   |   Calculation Function   |   ✅   |
 |  Nuke   |      Nuke a Channel      |   ✅   |
 |  Purge  |  Clear Message History   |   ✅   |
