@@ -58,6 +58,12 @@ export default async function checkAccount(username: string, password: string): 
 					locked
 				}
 			});
+
+			client.logOff();
 		});
+
+		client.once('error', (err) => {
+			reject(err);
+		})
 	});
 }
