@@ -64,6 +64,6 @@ export default async function checkAccount(username: string, password: string): 
 
 		client.once('error', (err) => {
 			reject(err);
-		})
+		});
 	});
 }
