@@ -55,7 +55,7 @@ export class SteamCommands extends Subcommand {
 				.setTitle('Steam Account Info')
 				.setURL(`https://steamcommunity.com/profiles/${accountData.steamID}`)
 				.setDescription(`User: **${accountData.accountInfo.name}**`)
-				.setColor('#03e3a3')
+				.setColor('#d5d8df')
 				.setFields(
 					{ name: 'Steam ID', value: accountData.steamID, inline: true },
 					{ name: '🌐 Country', value: accountData.accountInfo.country || 'Unknown', inline: true },

@@ -39,7 +39,7 @@ export class MathCommand extends Command {
 		const result = evaluate(expression);
 		const embed = new EmbedBuilder()
 			.setTitle('Result')
-			.setColor('Blue')
+			.setColor('#d5d8df')
 			.setFields([
 				{ name: 'input', value: '```' + expression + '```' },
 				{ name: 'output', value: '```' + result + '```' }
