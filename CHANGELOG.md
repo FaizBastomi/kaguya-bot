@@ -18,6 +18,8 @@
             </li>
         </ul>
     </td>
+  </tr>
+  <tr>
     <td align="center">18 march 2025</td>
     <td>
         Re-write the project to TypeScript <br />
