@@ -9,7 +9,7 @@ import { ApplicationIntegrationType, ChannelType, EmbedBuilder, InteractionConte
 })
 export class ServerInfoCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {
-		const integrationTypes: ApplicationIntegrationType[] = [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall];
+		const integrationTypes: ApplicationIntegrationType[] = [ApplicationIntegrationType.GuildInstall];
 		const contexts: InteractionContextType[] = [InteractionContextType.Guild];
 
 		registry.registerChatInputCommand((builder) =>

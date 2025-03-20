@@ -14,7 +14,7 @@ import { ApplicationIntegrationType, EmbedBuilder, InteractionContextType, Messa
 })
 export class AvatarCommands extends Subcommand {
 	public override registerApplicationCommands(registry: Subcommand.Registry) {
-		const integrationTypes: ApplicationIntegrationType[] = [ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall];
+		const integrationTypes: ApplicationIntegrationType[] = [ApplicationIntegrationType.GuildInstall];
 		const contexts: InteractionContextType[] = [InteractionContextType.Guild];
 
 		registry.registerChatInputCommand((builder) =>
