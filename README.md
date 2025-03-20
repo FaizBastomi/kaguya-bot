@@ -36,15 +36,18 @@ Install the dependencies:
 ### Run
 
 **Development**
+
 ```sh
 npm run dev
 ```
 
 **Production**
+
 ```sh
 # linux
 export NODE_ENV=production && npm run prod
 ```
+
 ```ps1
 # windows (CMD)
 set NODE_ENV=production && npm run prod
@@ -53,6 +56,7 @@ $env:NODE_ENV="production"; npm run prod
 ```
 
 ### Format the Code
+
 ```sh
 npm run format
 ```
@@ -69,12 +73,14 @@ Feel free to make a pull request.
 
 ## Features
 
-| Command |       Description        | Status |
-| :-----: | :----------------------: | :----: |
-|  Math   |   Calculation Function   |   ✅   |
-|  Nuke   |      Nuke a Channel      |   ✅   |
-|  Purge  |  Clear Message History   |   ✅   |
-|  Steam  | Check User Steam Profile |   ✅   |
+|  Command   |           Description            | Status |
+| :--------: | :------------------------------: | :----: |
+|   Avatar   | Get Guild or Default User Avatar |   ✅   |
+|    Math    |       Calculation Function       |   ✅   |
+|    Nuke    |          Nuke a Channel          |   ✅   |
+|   Purge    |      Clear Message History       |   ✅   |
+| Serverinfo |      Get Basic Server Info       |   ✅   |
+|   Steam    |     Check User Steam Profile     |   ✅   |
 
 ## Contributors
 

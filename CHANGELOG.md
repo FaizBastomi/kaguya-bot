@@ -6,6 +6,18 @@
     <th align="left">Actions</th>
   </tr>
   <tr>
+    <td align="center">20 march 2025</td>
+    <td>
+        Added:
+        <ul>
+            <li>
+                avatar
+            </li>
+            <li>
+                serverinfo
+            </li>
+        </ul>
+    </td>
     <td align="center">18 march 2025</td>
     <td>
         Re-write the project to TypeScript <br />
