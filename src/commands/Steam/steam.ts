@@ -2,12 +2,17 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Subcommand } from '@sapphire/plugin-subcommands';
 import { ApplicationIntegrationType, EmbedBuilder, InteractionContextType } from 'discord.js';
 
-import checkAccount from '../../lib/steamClient/steamClient';
+import checkAccount from '../../lib/steamClient';
+import { addSteamAccount, editSteamAccount, getSteamAccount, prisma } from '../../lib/prisma';
+import { pagination } from '../../lib/steamListPagination';
 
 @ApplyOptions<Subcommand.Options>({
 	name: 'steam',
 	description: 'Steam commands',
-	subcommands: [{ name: 'check', chatInputRun: 'steamCheckAccount' }]
+	subcommands: [
+		{ name: 'check', chatInputRun: 'steamCheckAccount' },
+		{ name: 'list', chatInputRun: 'steamListAccount' }
+	]
 })
 export class SteamCommands extends Subcommand {
 	public override registerApplicationCommands(registry: Subcommand.Registry) {
@@ -41,6 +46,16 @@ export class SteamCommands extends Subcommand {
 								.setRequired(true)
 						)
 				)
+				.addSubcommand((subcommand) =>
+					subcommand //
+						.setName('list')
+						.setDescription('List steam accounts')
+						.addStringOption((option) =>
+							option //
+								.setName('find_game')
+								.setDescription('Find game')
+						)
+				)
 		);
 	}
 
@@ -63,13 +78,58 @@ export class SteamCommands extends Subcommand {
 					{ name: 'Email Validated', value: accountData.emailInfo?.validated ? 'yes' : 'no' },
 					{ name: '⛔ Limited', value: accountData.limitation.limited ? 'yes' : 'no', inline: true },
 					{ name: '🚫 Community Banned', value: accountData.limitation.communityBanned ? 'yes' : 'no', inline: true },
-					{ name: '🔒 Locked', value: accountData.limitation.locked ? 'yes' : 'no', inline: true }
+					{ name: '🔒 Locked', value: accountData.limitation.locked ? 'yes' : 'no', inline: true },
+					{ name: '🎮 Games', value: "```"+accountData.games.join(', ')+"```" },
 				)
 				.setFooter({ text: '✅ Login successful' });
+
+			const accountExists = await getSteamAccount(username);
+			if (accountExists) {
+				await editSteamAccount(accountExists.id, username, password, accountData.games);
+			} else {
+				await addSteamAccount(username, password, accountData.games);
+			}
 
 			return replied.edit({ content: '', embeds: [dataEmbed] });
 		} catch (error: any) {
 			return replied.edit(`Failed to log into Steam: \`${error.message}\` ❌`);
 		}
+	}
+
+	public async steamListAccount(interaction: Subcommand.ChatInputCommandInteraction) {
+		const accountLists = await prisma.steamAccounts.findMany();
+		const findGame = interaction.options.getString('find_game');
+		if (!accountLists.length) {
+			return interaction.reply('No steam accounts found').then((message) => {
+				setTimeout(async () => {
+					await message.delete();
+				}, 5 * 1000);
+			});
+		}
+
+		if (accountLists.length > 25) {
+			const pages = [];
+			const until = Math.ceil(accountLists.length / 25);
+
+			for (let i = 1; i <= until; i++) {
+				const spliced = accountLists.splice(0, 24);
+				const pageEmbed = new EmbedBuilder() //
+					.setTitle('Steam Accounts')
+					.setColor('#d5d8df')
+					.setDescription('```' + spliced.map((account, index) => `${index + 1}. ${account.username}`).join('\n') + '```')
+					.setFooter({ text: `Page ${i} of ${until}` });
+				pages.push(pageEmbed);
+			}
+			return pagination(interaction, pages);
+		}
+
+		await interaction.deferReply();
+
+		const dataEmbed = new EmbedBuilder() //
+			.setTitle('Steam Accounts')
+			.setColor('#d5d8df')
+			.setDescription('```' + accountLists.map((account, index) => `${index + 1}. ${account.username}`).join('\n') + '```');
+
+		return interaction.editReply({ content: '', embeds: [dataEmbed] });
 	}
 }
