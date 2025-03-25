@@ -34,18 +34,22 @@ export class MathCommand extends Command {
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
 		await interaction.deferReply();
 
-		const expression = interaction.options.getString('expression', true);
-		const { evaluate } = await import('mathjs');
-		const result = evaluate(expression);
-		const embed = new EmbedBuilder()
-			.setTitle('Result')
-			.setColor('#d5d8df')
-			.setFields([
-				{ name: 'input', value: '```' + expression + '```' },
-				{ name: 'output', value: '```' + result + '```' }
-			])
-			.setTimestamp();
+		try {
+			const expression = interaction.options.getString('expression', true);
+			const { evaluate } = await import('mathjs');
+			const result = evaluate(expression);
+			const embed = new EmbedBuilder()
+				.setTitle('Result')
+				.setColor('#d5d8df')
+				.setFields([
+					{ name: 'input', value: '```' + expression + '```' },
+					{ name: 'output', value: '```' + result + '```' }
+				])
+				.setTimestamp();
 
-		return interaction.editReply({ embeds: [embed] });
+			return interaction.editReply({ embeds: [embed] });
+		} catch (error) {
+			return interaction.editReply('Invalid expression');
+		}
 	}
 }
