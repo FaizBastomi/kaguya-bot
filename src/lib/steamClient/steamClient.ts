@@ -15,6 +15,7 @@ interface AccountInfo {
 		communityBanned: boolean;
 		locked: boolean;
 	};
+	games: string[];
 }
 
 export default async function checkAccount(username: string, password: string): Promise<AccountInfo> {
@@ -39,8 +40,15 @@ export default async function checkAccount(username: string, password: string): 
 			console.log('Email Info retrieved');
 		});
 
-		client.once('accountLimitations', (limited, communityBanned, locked) => {
+		client.once('accountLimitations', async (limited, communityBanned, locked) => {
 			console.log('Account Limitations retrieved');
+
+			const games: string[] = [];
+			const gameList = await client.getUserOwnedApps(client.steamID!, { includeFreeSub: true, includePlayedFreeGames: true });
+			gameList.apps.forEach((game) => {
+				games.push(game.name);
+			});
+
 			resolve({
 				steamID: client.steamID!.toString(),
 				accountInfo: {
@@ -56,7 +64,8 @@ export default async function checkAccount(username: string, password: string): 
 					limited,
 					communityBanned,
 					locked
-				}
+				},
+				games
 			});
 
 			client.logOff();

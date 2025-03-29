@@ -63,7 +63,8 @@ export class SteamCommands extends Subcommand {
 					{ name: 'Email Validated', value: accountData.emailInfo?.validated ? 'yes' : 'no' },
 					{ name: '⛔ Limited', value: accountData.limitation.limited ? 'yes' : 'no', inline: true },
 					{ name: '🚫 Community Banned', value: accountData.limitation.communityBanned ? 'yes' : 'no', inline: true },
-					{ name: '🔒 Locked', value: accountData.limitation.locked ? 'yes' : 'no', inline: true }
+					{ name: '🔒 Locked', value: accountData.limitation.locked ? 'yes' : 'no', inline: true },
+					{ name: '🎮 Games', value: accountData.games.join(', ') }
 				)
 				.setFooter({ text: '✅ Login successful' });
 
