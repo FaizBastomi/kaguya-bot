@@ -3,7 +3,7 @@ import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework
 import { EmbedBuilder, time, TimestampStyles, type StringSelectMenuInteraction } from 'discord.js';
 
 import { deleteSteamAccount, editSteamAccount, getSteamAccount } from '../lib/prisma';
-import checkAccount from '../lib/steamClient';
+import { checkSteamAccount } from '../lib/steamClient';
 import _ from 'lodash';
 
 @ApplyOptions<InteractionHandler.Options>({
@@ -17,7 +17,7 @@ export class MenuHandler extends InteractionHandler {
 
 		const replied = await interaction.reply('🔍 Checking the account...');
 		try {
-			const accountData = await checkAccount(account!.username, account!.password);
+			const accountData = await checkSteamAccount(account!.username, account!.password);
 			const newData = {
 				username: account!.username,
 				password: account!.password,

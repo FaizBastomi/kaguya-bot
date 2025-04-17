@@ -7,6 +7,7 @@ import {
 } from '@sapphire/framework';
 import { cyan } from 'colorette';
 import type { APIUser, Guild, User } from 'discord.js';
+import axios, { AxiosInstance } from 'axios';
 
 export function logSuccessCommand(payload: ContextMenuCommandSuccessPayload | ChatInputCommandSuccessPayload | MessageCommandSuccessPayload): void {
 	let successLoggerData: ReturnType<typeof getSuccessLoggerData>;
@@ -27,6 +28,15 @@ export function getSuccessLoggerData(guild: Guild | null, user: User, command: C
 	const sentAt = getGuildInfo(guild);
 
 	return { shard, commandName, author, sentAt };
+}
+
+export function createAxiosSession(baseURL: string = ''): AxiosInstance {
+	return axios.create({
+		baseURL,
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
 }
 
 function getShardInfo(id: number) {
