@@ -13,7 +13,7 @@ import {
 import { addSteamAccount, editSteamAccount, getSteamAccount, prisma } from '../../lib/prisma';
 import { pagination } from '../../lib/steamListPagination';
 
-import checkAccount from '../../lib/steamClient';
+import { forceCheckAccount, checkSteamAccount } from '../../lib/steamClient';
 import _ from 'lodash';
 
 @ApplyOptions<Subcommand.Options>({
@@ -59,7 +59,13 @@ export class SteamCommands extends Subcommand {
 						.addBooleanOption((option) =>
 							option //
 								.setName('force')
-								.setDescription('Should the bot force update the account info?')
+								.setDescription('Should the bot force fetch account info from Steam?')
+								.setRequired(false)
+						)
+						.addBooleanOption((option) =>
+							option //
+								.setName('force_login')
+								.setDescription('Should the bot force login to Steam?')
 								.setRequired(false)
 						)
 				)
@@ -70,7 +76,7 @@ export class SteamCommands extends Subcommand {
 						.addStringOption((option) =>
 							option //
 								.setName('find_game')
-								.setDescription('Find specific accounts with a game name')
+								.setDescription('Find specific account(s) with a game name')
 						)
 				)
 		);
@@ -98,7 +104,8 @@ export class SteamCommands extends Subcommand {
 		}
 
 		try {
-			const accountData = await checkAccount(username, password);
+			const forceLogin = interaction.options.getBoolean('force_login') ?? false;
+			const accountData = forceLogin ? await forceCheckAccount(username, password) : await checkSteamAccount(username, password);
 			const dataEmbed = new EmbedBuilder() //
 				.setTitle('Steam Account Info')
 				.setURL(`https://steamcommunity.com/profiles/${accountData.steamID}`)
@@ -204,7 +211,10 @@ export class SteamCommands extends Subcommand {
 
 		return interaction.editReply({ content: '', embeds: [dataEmbed], components: [actionRow] }).then((msg) => {
 			setTimeout(async () => {
-				await msg.edit({ components: [] });
+				await msg.edit({
+					content: 'This message is no longer active',
+					components: []
+				});
 			}, 60 * 1000);
 		});
 	}

@@ -21,7 +21,7 @@ interface AccountInfo {
 	games: string[];
 }
 
-export default async function checkAccount(username:string,password:string): Promise<AccountInfo> {
+export async function forceCheckAccount(username: string, password: string): Promise<AccountInfo> {
 	try {
 		void forceLogin(username, password);
 		const accountInfo = await checkSteamAccount(username, password);
@@ -99,7 +99,7 @@ async function forceLogin(username: string, password: string): Promise<void> {
 	}
 }
 
-async function checkSteamAccount(username: string, password: string): Promise<AccountInfo> {
+export async function checkSteamAccount(username: string, password: string): Promise<AccountInfo> {
 	return new Promise((resolve, reject) => {
 		const client = new SteamUser();
 
