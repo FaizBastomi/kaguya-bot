@@ -1,13 +1,29 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Subcommand } from '@sapphire/plugin-subcommands';
-import { ApplicationIntegrationType, EmbedBuilder, InteractionContextType } from 'discord.js';
+import {
+	ActionRowBuilder,
+	ApplicationIntegrationType,
+	EmbedBuilder,
+	InteractionContextType,
+	StringSelectMenuBuilder,
+	StringSelectMenuOptionBuilder,
+	time,
+	TimestampStyles
+} from 'discord.js';
+import { addSteamAccount, editSteamAccount, getSteamAccount, prisma } from '../../lib/prisma';
+import { pagination } from '../../lib/steamListPagination';
 
-import checkAccount from '../../lib/steamClient/steamClient';
+import checkAccount from '../../lib/steamClient';
+import _ from 'lodash';
 
 @ApplyOptions<Subcommand.Options>({
 	name: 'steam',
 	description: 'Steam commands',
-	subcommands: [{ name: 'check', chatInputRun: 'steamCheckAccount' }]
+	cooldownDelay: 15 * 1000,
+	subcommands: [
+		{ name: 'check', chatInputRun: 'steamCheckAccount' },
+		{ name: 'list', chatInputRun: 'steamListAccount' }
+	]
 })
 export class SteamCommands extends Subcommand {
 	public override registerApplicationCommands(registry: Subcommand.Registry) {
@@ -40,6 +56,22 @@ export class SteamCommands extends Subcommand {
 								.setDescription('Steam password')
 								.setRequired(true)
 						)
+						.addBooleanOption((option) =>
+							option //
+								.setName('force')
+								.setDescription('Should the bot force update the account info?')
+								.setRequired(false)
+						)
+				)
+				.addSubcommand((subcommand) =>
+					subcommand //
+						.setName('list')
+						.setDescription('List steam accounts')
+						.addStringOption((option) =>
+							option //
+								.setName('find_game')
+								.setDescription('Find specific accounts with a game name')
+						)
 				)
 		);
 	}
@@ -49,6 +81,22 @@ export class SteamCommands extends Subcommand {
 		const password = interaction.options.getString('password', true);
 
 		const replied = await interaction.reply('🔍 Checking the account...');
+		const accountExists = await getSteamAccount(username);
+
+		const forceUpdate = interaction.options.getBoolean('force') ?? false;
+		if (accountExists && !forceUpdate) {
+			const dataEmbed = new EmbedBuilder() //
+				.setTitle('Steam Account Info')
+				.setDescription(
+					`User: \`${accountExists.username}\`\nPassword ||\`${accountExists.password}\`||` +
+						`\nChecked: ${time(accountExists.lastChecked, TimestampStyles.ShortDateTime)}`
+				)
+				.setColor('#d5d8df')
+				.setFields({ name: '🎮 Games', value: accountExists.games.join(', ') })
+				.setFooter({ text: '✅ Data from database' });
+			return replied.edit({ content: '', embeds: [dataEmbed] });
+		}
+
 		try {
 			const accountData = await checkAccount(username, password);
 			const dataEmbed = new EmbedBuilder() //
@@ -68,9 +116,96 @@ export class SteamCommands extends Subcommand {
 				)
 				.setFooter({ text: '✅ Login successful' });
 
+			if (accountExists && forceUpdate) {
+				await editSteamAccount(accountExists!.id, {
+					username: username,
+					password: password,
+					games: accountData.games,
+					lastChecked: new Date()
+				});
+			} else {
+				await addSteamAccount(username, password, accountData.games);
+			}
+
 			return replied.edit({ content: '', embeds: [dataEmbed] });
 		} catch (error: any) {
 			return replied.edit(`Failed to log into Steam: \`${error.message}\` ❌`);
 		}
+	}
+
+	public async steamListAccount(interaction: Subcommand.ChatInputCommandInteraction) {
+		let accountLists = await prisma.steamAccounts.findMany();
+		const findGame = interaction.options.getString('find_game');
+		if (!accountLists.length) {
+			return interaction.reply('No steam accounts found').then((message) => {
+				setTimeout(async () => {
+					await message.delete();
+				}, 5 * 1000);
+			});
+		}
+
+		if (findGame) {
+			accountLists = accountLists.filter((account) =>
+				account.games.some((game: string) => game.toLowerCase().includes(findGame.toLowerCase()))
+			);
+			if (!accountLists.length) {
+				return interaction.reply(`No steam accounts with game "${findGame}" found.`);
+			}
+		}
+
+		if (accountLists.length > 25) {
+			const pages = [];
+			const selections = [];
+			const until = Math.ceil(accountLists.length / 25);
+
+			for (let i = 1; i <= until; i++) {
+				const spliced = accountLists.splice(0, 24);
+				const pageEmbed = new EmbedBuilder() //
+					.setTitle('Steam Accounts')
+					.setColor('#d5d8df')
+					.setDescription('```' + spliced.map((account, index) => `${index + 1}. ${account.username}`).join('\n') + '```')
+					.setFooter({ text: `Page ${i} of ${until}` });
+				pages.push(pageEmbed);
+
+				const accountOptions = spliced.map((account, index) =>
+					new StringSelectMenuOptionBuilder() //
+						.setLabel(`${index + 1}. ${account.username}`)
+						.setValue(account.username)
+				);
+				const selectMenu = new StringSelectMenuBuilder() //
+					.setCustomId('steamAccountSelect')
+					.setPlaceholder('Select an account')
+					.addOptions(accountOptions);
+				const actionRow = new ActionRowBuilder<StringSelectMenuBuilder>() //
+					.addComponents(selectMenu);
+				selections.push(actionRow);
+			}
+			return pagination(interaction, pages, selections);
+		}
+
+		await interaction.deferReply();
+
+		const accountOptions = accountLists.map((account, index) =>
+			new StringSelectMenuOptionBuilder() //
+				.setLabel(`${index + 1}. ${account.username}`)
+				.setValue(account.username)
+		);
+		const selectMenu = new StringSelectMenuBuilder() //
+			.setCustomId('steamAccountSelect')
+			.setPlaceholder('Select an account')
+			.addOptions(accountOptions);
+		const actionRow = new ActionRowBuilder<StringSelectMenuBuilder>() //
+			.addComponents(selectMenu);
+
+		const dataEmbed = new EmbedBuilder() //
+			.setTitle('Steam Accounts')
+			.setColor('#d5d8df')
+			.setDescription('```' + accountLists.map((account, index) => `${index + 1}. ${account.username}`).join('\n') + '```');
+
+		return interaction.editReply({ content: '', embeds: [dataEmbed], components: [actionRow] }).then((msg) => {
+			setTimeout(async () => {
+				await msg.edit({ components: [] });
+			}, 60 * 1000);
+		});
 	}
 }
