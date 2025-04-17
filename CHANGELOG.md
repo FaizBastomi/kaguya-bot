@@ -6,6 +6,20 @@
     <th align="left">Actions</th>
   </tr>
   <tr>
+    <td align="center">17 April 2025</td>
+    <td>
+        Added:
+        <ul>
+            <li>
+                mongoDB Atlas integration with Prisma.io
+            </li>
+            <li>
+                steam list: to get all accounts you have saved
+            </li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td align="center">20 march 2025</td>
     <td>
         Added:

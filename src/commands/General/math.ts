@@ -5,7 +5,7 @@ import { ApplicationIntegrationType, EmbedBuilder, InteractionContextType } from
 @ApplyOptions<Command.Options>({
 	name: 'math',
 	description: 'do math',
-	cooldownDelay: 5000
+	cooldownDelay: 5 * 1000
 })
 export class MathCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

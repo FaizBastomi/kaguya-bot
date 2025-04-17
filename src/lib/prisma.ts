@@ -36,15 +36,17 @@ export async function deleteSteamAccount(dataId: string) {
 	});
 }
 
-export async function editSteamAccount(dataId: string, username: string, password: string, games: string[]): Promise<SteamAccounts> {
+export async function editSteamAccount(
+	dataId: string,
+	updates: { username: string; password: string; games: string[]; lastChecked: Date }
+): Promise<SteamAccounts> {
 	return await prisma.steamAccounts.update({
-		where: {
-			id: dataId
-		},
+		where: { id: dataId },
 		data: {
-			username: username,
-			password: password,
-			games: games
+			username: updates.username,
+			password: updates.password,
+			games: updates.games,
+			lastChecked: updates.lastChecked
 		}
 	});
 }

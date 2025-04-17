@@ -6,10 +6,16 @@ import {
 	ButtonBuilder,
 	ButtonStyle,
 	ActionRowBuilder,
-	ComponentType
+	ComponentType,
+	type StringSelectMenuBuilder
 } from 'discord.js';
 
-export async function pagination(interaction: ChatInputCommandInteraction | ButtonInteraction, pages: EmbedBuilder[], time: number = 30 * 1000) {
+export async function pagination(
+	interaction: ChatInputCommandInteraction | ButtonInteraction,
+	pages: EmbedBuilder[],
+	selections: ActionRowBuilder<StringSelectMenuBuilder>[],
+	time: number = 30 * 1000
+) {
 	if (!isAnyInteraction(interaction)) throw new Error('Invalid interaction type');
 	if (!pages) return;
 	if (!Array.isArray(pages)) return;
@@ -28,16 +34,16 @@ export async function pagination(interaction: ChatInputCommandInteraction | Butt
 	// Button
 	const prev = new ButtonBuilder() //
 		.setCustomId('prev')
-		.setEmoji({ name: '⬅️' })
+		.setEmoji('⬅️')
 		.setStyle(ButtonStyle.Primary)
 		.setDisabled(true);
 	const next = new ButtonBuilder() //
 		.setCustomId('next')
-		.setEmoji({ name: '➡️' })
+		.setEmoji('➡️')
 		.setStyle(ButtonStyle.Primary);
 	const home = new ButtonBuilder() //
 		.setCustomId('home')
-		.setEmoji({ name: '🏠' })
+		.setEmoji('🏠')
 		.setStyle(ButtonStyle.Secondary)
 		.setDisabled(true);
 
@@ -47,7 +53,7 @@ export async function pagination(interaction: ChatInputCommandInteraction | Butt
 
 	const currentPage = await defer.edit({
 		embeds: [pages[index]],
-		components: [buttonRow]
+		components: [buttonRow, selections[index]]
 	});
 
 	const collector = currentPage.createMessageComponentCollector({
@@ -80,7 +86,7 @@ export async function pagination(interaction: ChatInputCommandInteraction | Butt
 
 		await defer.edit({
 			embeds: [pages[index]],
-			components: [buttonRow]
+			components: [buttonRow, selections[index]]
 		});
 
 		collector.resetTimer();

@@ -14,8 +14,9 @@ datasource db {
 }
 
 model SteamAccounts {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  username  String
-  password  String
-  games     String[]
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  username    String
+  password    String
+  games       String[]
+  lastChecked DateTime @default(now())
 }
