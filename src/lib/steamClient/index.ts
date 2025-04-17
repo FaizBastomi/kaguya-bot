@@ -43,11 +43,11 @@ export default async function checkAccount(username: string, password: string): 
 		client.once('accountLimitations', async (limited, communityBanned, locked) => {
 			console.log('Account Limitations retrieved');
 
-			const gameLists: string[] = [];
-			const games = await client.getUserOwnedApps(client.steamID!);
-			for (const game of games.apps) {
-				gameLists.push(game.name.toString());
-			}
+			const games: string[] = [];
+			const gameList = await client.getUserOwnedApps(client.steamID!, { includeFreeSub: true, includePlayedFreeGames: true });
+			gameList.apps.forEach((game) => {
+				games.push(game.name);
+			});
 
 			resolve({
 				steamID: client.steamID!.toString(),
@@ -65,7 +65,7 @@ export default async function checkAccount(username: string, password: string): 
 					communityBanned,
 					locked
 				},
-				games: gameLists
+				games
 			});
 
 			client.logOff();
