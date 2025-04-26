@@ -21,7 +21,7 @@
   resolved "https://registry.yarnpkg.com/@bbob/plugin-helper/-/plugin-helper-2.9.0.tgz#01ca7706c23dc8fe426b09a167de4e15a7927c16"
   integrity sha512-idpUcNQ2co6T1oU/7/DG/ZRfipSSkTn9Ozw9f5vaXH7nzV3qhqZnhFVlHTzGGnRlzKlBwWOBzOdWi4Zeqg1c5A==
 
-"@discordjs/builders@^1.10.0", "@discordjs/builders@^1.10.1":
+"@discordjs/builders@^1.10.1":
   version "1.10.1"
   resolved "https://registry.yarnpkg.com/@discordjs/builders/-/builders-1.10.1.tgz#f30b5d74f8ebaae47c7c70eaf0f8df45eadf9f47"
   integrity sha512-OWo1fY4ztL1/M/DUyRPShB4d/EzVfuUvPTRRHRIt/YxBrUYSz0a+JicD5F5zHFoNs2oTuWavxCOVFV1UljHTng==
@@ -384,20 +384,20 @@
   resolved "https://registry.yarnpkg.com/@sapphire/duration/-/duration-1.1.4.tgz#159139229052f620f597dac4c0b5fd4776c80957"
   integrity sha512-hxtuE8HvmWcRok2A10lJ+ic8qY0oYGTTn44XmESUYJYYSVJWmqlCH1LnNYi6Ul+LRjxNUfFQEL/TJS0GJ+8kew==
 
-"@sapphire/framework@^5.3.2":
-  version "5.3.2"
-  resolved "https://registry.yarnpkg.com/@sapphire/framework/-/framework-5.3.2.tgz#558e14ccffe1deb671d22917e1f384327135f97f"
-  integrity sha512-1DU8Lm57mnbcRgchd9ucbpWA5Yfy7TFOaA+m7zdlKlKUa2NzDUJW1XiTnChfcZUI1SDA0uaikh6u7gaN0zRX5Q==
+"@sapphire/framework@~5.3.4":
+  version "5.3.4"
+  resolved "https://registry.yarnpkg.com/@sapphire/framework/-/framework-5.3.4.tgz#d481a345b92daf0039ec7a9046a1c75bdfcdcbe9"
+  integrity sha512-LmglzQXVvmMaf7PLqFWwZY6aQv4aY71bW2i++NYrnDuvTvHuoqwmHtkPvpLnXSFmVmjiFBlZR7ktqjfLFpOgww==
   dependencies:
-    "@discordjs/builders" "^1.10.0"
+    "@discordjs/builders" "^1.10.1"
     "@sapphire/discord-utilities" "^3.4.4"
     "@sapphire/discord.js-utilities" "^7.3.2"
     "@sapphire/lexure" "^1.1.10"
-    "@sapphire/pieces" "^4.3.1"
+    "@sapphire/pieces" "^4.3.2"
     "@sapphire/ratelimits" "^2.4.11"
     "@sapphire/result" "^2.7.2"
     "@sapphire/stopwatch" "^1.5.4"
-    "@sapphire/utilities" "^3.18.1"
+    "@sapphire/utilities" "^3.18.2"
 
 "@sapphire/lexure@^1.1.10":
   version "1.1.10"
@@ -411,14 +411,14 @@
   resolved "https://registry.yarnpkg.com/@sapphire/node-utilities/-/node-utilities-1.0.2.tgz#d6ef723edca21bea4caff9b0b6efe529f3f2c238"
   integrity sha512-v4prFEQNbUfD3j0/gjYd93xYY52N3wrtwTgJc7n68a/GuQXiXLnfypczG5CDVX1nQdvdCB9t4wSUHpfB82zAbQ==
 
-"@sapphire/pieces@^4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@sapphire/pieces/-/pieces-4.3.1.tgz#88627bf22bb3bea2746f52278b00fcc36906ee18"
-  integrity sha512-t42o6i8gPQ3QISIsMl463hj057yfyHsaSrs4FssdiGLmnvL9cuLGLTsjGEPn904wHUhPzS8W5aAPr788RK2/jQ==
+"@sapphire/pieces@^4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@sapphire/pieces/-/pieces-4.3.2.tgz#7ce4da92b65fc4314690ceef780057d5dda99a6a"
+  integrity sha512-0GuLwBoiyINHRDYEcd+RR/enYUQCiGkbCYOVi9Zwa1G4c2S6lc2MqdUd5ies7LkY5HgqDg/3ST7W4FSzxnvbHA==
   dependencies:
     "@discordjs/collection" "^1.5.3"
-    "@sapphire/utilities" "^3.16.2"
-    tslib "^2.6.3"
+    "@sapphire/utilities" "^3.18.2"
+    tslib "^2.8.1"
 
 "@sapphire/plugin-logger@^4.0.2":
   version "4.0.2"
@@ -490,7 +490,7 @@
     tslib "^2.6.2"
     typescript "^5.4.2"
 
-"@sapphire/utilities@^3.16.2", "@sapphire/utilities@^3.18.0", "@sapphire/utilities@^3.18.1":
+"@sapphire/utilities@^3.18.0", "@sapphire/utilities@^3.18.1", "@sapphire/utilities@^3.18.2":
   version "3.18.2"
   resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-3.18.2.tgz#42f1cec0b9bc5fac411b21f40893bed5770d4a0b"
   integrity sha512-QGLdC9+pT74Zd7aaObqn0EUfq40c4dyTL65pFnkM6WO1QYN7Yg/s4CdH+CXmx0Zcu6wcfCWILSftXPMosJHP5A==
@@ -685,7 +685,7 @@ discord-api-types@^0.37.114, discord-api-types@^0.37.119:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.119.tgz#29e32f635351da32dd4c92defcafdeb65156ad33"
   integrity sha512-WasbGFXEB+VQWXlo6IpW3oUv73Yuau1Ig4AZF/m13tXcTKnMpc/mHjpztIlz4+BM9FG9BHQkEXiPto3bKduQUg==
 
-discord.js@^14.17.3:
+discord.js@~14.18.0:
   version "14.18.0"
   resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.18.0.tgz#880f521f1717eadd92eee0b7f85c7ee3bd724b24"
   integrity sha512-SvU5kVUvwunQhN2/+0t55QW/1EHfB1lp0TtLZUSXVHDmyHTrdOj5LRKdR0zLcybaA15F+NtdWuWmGOX9lE+CAw==
