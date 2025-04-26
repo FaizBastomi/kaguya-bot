@@ -12,8 +12,11 @@ import _ from 'lodash';
 export class MenuHandler extends InteractionHandler {
 	public override async run(interaction: StringSelectMenuInteraction) {
 		const selectedValue = interaction.values[0];
-		console.log('Selected value:', selectedValue);
 		const account = await getSteamAccount(selectedValue);
+
+		if (!account) {
+			return interaction.reply('Account not found in the database.');
+		}
 
 		const replied = await interaction.reply('🔍 Checking the account...');
 		try {
