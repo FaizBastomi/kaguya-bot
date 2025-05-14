@@ -1,6 +1,6 @@
 {
 	"name": "kaguya-bot",
-	"version": "0.3.6",
+	"version": "0.3.8",
 	"main": "dist/index.js",
 	"author": "Faiz",
 	"license": "UNLICENSE",
@@ -49,5 +49,8 @@
 		"format": "prettier --write \"src/\""
 	},
 	"prettier": "@sapphire/prettier-config",
-	"packageManager": "yarn@1.22.22"
+	"packageManager": "yarn@1.22.22",
+	"engines": {
+		"node": ">=20.18.0"
+	}
 }
