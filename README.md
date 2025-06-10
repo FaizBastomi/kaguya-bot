@@ -34,6 +34,8 @@ Install the dependencies:
 ```
 
 ### Run
+> [!IMPORTANT]
+> FIRST TIME SETUP, YOU NEED TO RUN `npm run prisma:generate`
 
 **Development**
 
