@@ -1,16 +1,27 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework';
-import { EmbedBuilder, time, TimestampStyles, type StringSelectMenuInteraction } from 'discord.js';
+import { EmbedBuilder, MessageFlags, time, TimestampStyles, type StringSelectMenuInteraction } from 'discord.js';
 
 import { deleteSteamAccount, editSteamAccount, getSteamAccount } from '../lib/prisma';
 import { checkSteamAccount } from '../lib/steamClient';
-import _ from 'lodash';
+import lodash from 'lodash';
+import { startMenuTimer } from '../lib/menuTimer';
 
 @ApplyOptions<InteractionHandler.Options>({
 	interactionHandlerType: InteractionHandlerTypes.SelectMenu
 })
 export class MenuHandler extends InteractionHandler {
 	public override async run(interaction: StringSelectMenuInteraction) {
+		const [_, userId] = interaction.customId.split(':');
+		if (interaction.user.id !== userId) {
+			return interaction.reply({
+				content: 'This interaction is not for you.',
+				flags: MessageFlags.Ephemeral
+			});
+		}
+
+		startMenuTimer(interaction.message);
+
 		const selectedValue = interaction.values[0];
 		const account = await getSteamAccount(selectedValue);
 
@@ -28,7 +39,7 @@ export class MenuHandler extends InteractionHandler {
 				lastChecked: new Date()
 			};
 
-			if (!_.isEqual(accountData, account)) {
+			if (!lodash.isEqual(accountData, account)) {
 				await editSteamAccount(account!.id, {
 					username: newData.username,
 					password: newData.password,
@@ -58,7 +69,8 @@ export class MenuHandler extends InteractionHandler {
 	}
 
 	public override parse(interaction: StringSelectMenuInteraction) {
-		if (interaction.customId !== 'steamAccountSelect') return this.none();
+		const [prefix] = interaction.customId.split(':');
+		if (prefix !== 'steamAccountSelect') return this.none();
 
 		return this.some();
 	}

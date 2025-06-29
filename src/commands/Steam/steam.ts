@@ -15,6 +15,7 @@ import { pagination } from '../../lib/steamListPagination';
 
 import { forceCheckAccount, checkSteamAccount } from '../../lib/steamClient';
 import _ from 'lodash';
+import { startMenuTimer } from '../../lib/menuTimer';
 
 @ApplyOptions<Subcommand.Options>({
 	name: 'steam',
@@ -198,7 +199,7 @@ export class SteamCommands extends Subcommand {
 				.setValue(account.username)
 		);
 		const selectMenu = new StringSelectMenuBuilder() //
-			.setCustomId('steamAccountSelect')
+			.setCustomId(`steamAccountSelect:${interaction.user.id}`)
 			.setPlaceholder('Select an account')
 			.addOptions(accountOptions);
 		const actionRow = new ActionRowBuilder<StringSelectMenuBuilder>() //
@@ -209,13 +210,9 @@ export class SteamCommands extends Subcommand {
 			.setColor('#d5d8df')
 			.setDescription('```' + accountLists.map((account, index) => `${index + 1}. ${account.username}`).join('\n') + '```');
 
-		return interaction.editReply({ content: '', embeds: [dataEmbed], components: [actionRow] }).then((msg) => {
-			setTimeout(async () => {
-				await msg.edit({
-					content: 'This message is no longer active',
-					components: []
-				});
-			}, 60 * 1000);
-		});
+		const currMsg = await interaction.editReply({ content: '', embeds: [dataEmbed], components: [actionRow] });
+		startMenuTimer(currMsg);
+
+		return currMsg;
 	}
 }
