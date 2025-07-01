@@ -22,13 +22,9 @@ interface AccountInfo {
 }
 
 export async function forceCheckAccount(username: string, password: string): Promise<AccountInfo> {
-	try {
-		void forceLogin(username, password);
-		const accountInfo = await checkSteamAccount(username, password);
-		return accountInfo;
-	} catch (error) {
-		throw error;
-	}
+	void forceLogin(username, password);
+	const accountInfo = await checkSteamAccount(username, password);
+	return accountInfo;
 }
 
 async function axiosPost<T>(url: string, baseURL: string = '', data?: any, config?: AxiosRequestConfig): Promise<T> {
