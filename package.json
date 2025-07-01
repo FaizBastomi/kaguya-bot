@@ -1,6 +1,6 @@
 {
 	"name": "kaguya-bot",
-	"version": "0.3.8",
+	"version": "0.3.11",
 	"main": "dist/index.js",
 	"author": "Faiz",
 	"license": "UNLICENSE",

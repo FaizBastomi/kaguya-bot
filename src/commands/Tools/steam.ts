@@ -181,7 +181,7 @@ export class SteamCommands extends Subcommand {
 						.setValue(account.username)
 				);
 				const selectMenu = new StringSelectMenuBuilder() //
-					.setCustomId('steamAccountSelect')
+					.setCustomId(`steamAccountSelect:${interaction.user.id}`)
 					.setPlaceholder('Select an account')
 					.addOptions(accountOptions);
 				const actionRow = new ActionRowBuilder<StringSelectMenuBuilder>() //
