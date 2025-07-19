@@ -1,3 +1,6 @@
+> [!CAUTION]
+> This branch is no longer maintained, I suggest to use the `main` branch
+
 <h1 align="center">Kaguya Bot</h1>
 <div align="center">
 <img src="https://img.shields.io/badge/Node-%3E%3D%2018-43853D?style=flat-square&logo=node.js&logoColor=white"/>
