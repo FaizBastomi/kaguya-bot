@@ -83,7 +83,15 @@ export class PurgeCommand extends Subcommand {
 				});
 			}
 
-			await textChannel.bulkDelete(filteredMessages, true);
+			try {
+				await textChannel.bulkDelete(filteredMessages, true);
+			} catch (error) {
+				return interaction.editReply('An error occurred while trying to purge messages.').then((msg) => {
+					setTimeout(async () => {
+						await msg.delete();
+					}, 5 * 1000);
+				});
+			}
 
 			return interaction.editReply(`Successfully purged **${filteredMessages?.size}** messages`).then((msg) => {
 				setTimeout(async () => {
@@ -125,7 +133,15 @@ export class PurgeCommand extends Subcommand {
 				});
 			}
 
-			await textChannel.bulkDelete(filteredMessages, true);
+			try {
+				await textChannel.bulkDelete(filteredMessages, true);
+			} catch (error) {
+				return interaction.editReply('An error occurred while trying to purge messages.').then((msg) => {
+					setTimeout(async () => {
+						await msg.delete();
+					}, 5 * 1000);
+				});
+			}
 
 			return interaction.editReply(`Successfully purged **${filteredMessages?.size}** messages from ${user}`).then((msg) => {
 				setTimeout(async () => {
