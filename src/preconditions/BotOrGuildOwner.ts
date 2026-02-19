@@ -4,7 +4,7 @@ import type { ChatInputCommandInteraction } from 'discord.js';
 export class UserPrecondition extends Precondition {
 	public override chatInputRun(interaction: ChatInputCommandInteraction) {
 		if (
-			interaction.user.id === this.container.client.application?.owner?.id ||
+			interaction.user.id === process.env.OWNER_ID ||
 			(interaction.guild && interaction.guild.ownerId === interaction.user.id)
 		) {
 			return this.ok();
