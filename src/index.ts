@@ -14,7 +14,8 @@ const client = new SapphireClient({
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.GuildModeration
+		GatewayIntentBits.GuildModeration,
+		GatewayIntentBits.GuildVoiceStates
 	]
 });
 

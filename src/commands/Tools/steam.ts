@@ -14,7 +14,7 @@ import { addSteamAccount, editSteamAccount, getSteamAccount, prisma } from '../.
 import { pagination } from '../../lib/steamListPagination';
 
 import { forceCheckAccount, checkSteamAccount } from '../../lib/steamClient';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { startMenuTimer } from '../../lib/menuTimer';
 
 @ApplyOptions<Subcommand.Options>({
