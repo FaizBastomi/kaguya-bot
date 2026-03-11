@@ -65,7 +65,7 @@ export class PurgeCommand extends Subcommand {
 			if (isNaN(amount) || amount < 2 || amount > MessageLimits.MaximumMessagesToBulkDelete) {
 				return interaction.reply(`Please provide a number between 2 and ${MessageLimits.MaximumMessagesToBulkDelete}`).then((msg) => {
 					setTimeout(async () => {
-						await msg.delete();
+						await msg.delete().catch(() => null);
 					}, 5 * 1000);
 				});
 			}
@@ -78,7 +78,7 @@ export class PurgeCommand extends Subcommand {
 			if (filteredMessages.size < 1) {
 				return interaction.editReply('No messages found to delete').then((msg) => {
 					setTimeout(async () => {
-						await msg.delete();
+						await msg.delete().catch(() => null);
 					}, 5 * 1000);
 				});
 			}
@@ -88,14 +88,14 @@ export class PurgeCommand extends Subcommand {
 			} catch (error) {
 				return interaction.editReply('An error occurred while trying to purge messages.').then((msg) => {
 					setTimeout(async () => {
-						await msg.delete();
+						await msg.delete().catch(() => null);
 					}, 5 * 1000);
 				});
 			}
 
 			return interaction.editReply(`Successfully purged **${filteredMessages?.size}** messages`).then((msg) => {
 				setTimeout(async () => {
-					await msg.delete();
+					await msg.delete().catch(() => null);
 				}, 5 * 1000);
 			});
 		}
@@ -113,7 +113,7 @@ export class PurgeCommand extends Subcommand {
 			if (isNaN(amount) || amount < 2 || amount > MessageLimits.MaximumMessagesToBulkDelete) {
 				return interaction.reply(`Please provide a number between 2 and ${MessageLimits.MaximumMessagesToBulkDelete}`).then((msg) => {
 					setTimeout(async () => {
-						await msg.delete();
+						await msg.delete().catch(() => null);
 					}, 5 * 1000);
 				});
 			}
@@ -128,7 +128,7 @@ export class PurgeCommand extends Subcommand {
 			if (filteredMessages.size < 1) {
 				return interaction.editReply('No messages found to delete').then((msg) => {
 					setTimeout(async () => {
-						await msg.delete();
+						await msg.delete().catch(() => null);
 					}, 5 * 1000);
 				});
 			}
@@ -138,14 +138,14 @@ export class PurgeCommand extends Subcommand {
 			} catch (error) {
 				return interaction.editReply('An error occurred while trying to purge messages.').then((msg) => {
 					setTimeout(async () => {
-						await msg.delete();
+						await msg.delete().catch(() => null);
 					}, 5 * 1000);
 				});
 			}
 
 			return interaction.editReply(`Successfully purged **${filteredMessages?.size}** messages from ${user}`).then((msg) => {
 				setTimeout(async () => {
-					await msg.delete();
+					await msg.delete().catch(() => null);
 				}, 5 * 1000);
 			});
 		}
