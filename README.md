@@ -17,6 +17,8 @@ Read [changelog](https://github.com/FaizBastomi/kaguya-bot/blob/main/CHANGELOG.m
 2. Tutorial how to get your <a href="https://www.writebots.com/discord-bot-token/" target="_blank">Bot Token</a>
 
 ## Get Started
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFaizBastomi%2Fkaguya-bot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FFaizBastomi%2Fkaguya-bot?ref=badge_shield)
+
 
 This Project Need NodeJS 20x or higher, [get here.](https://nodejs.org/en/download/current/)
 
@@ -92,3 +94,7 @@ Feel free to make a pull request.
 <sub><b>Faiz Bastomi</b></sub><br /></td>
   </tr>
 </table>
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFaizBastomi%2Fkaguya-bot.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FFaizBastomi%2Fkaguya-bot?ref=badge_large)
