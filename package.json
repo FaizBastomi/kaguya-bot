@@ -20,7 +20,7 @@
 		"colorette": "^2.0.20",
 		"discord.js": "~14.26.0",
 		"lodash": "^4.18.1",
-		"mathjs": "^14.3.1",
+		"mathjs": "^15.2.0",
 		"node-forge": "^1.4.0",
 		"steam-user": "^5.2.0"
 	},
