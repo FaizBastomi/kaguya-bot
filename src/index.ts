@@ -2,7 +2,6 @@ import './lib/setup';
 
 import { LogLevel, SapphireClient } from '@sapphire/framework';
 import { GatewayIntentBits } from 'discord.js';
-import { shutdownPrisma } from './lib/prisma';
 
 const client = new SapphireClient({
 	logger: {
@@ -30,18 +29,5 @@ const main = async () => {
 		process.exit(1);
 	}
 };
-
-const shutdown = async () => {
-	try {
-		await shutdownPrisma();
-	} catch (error: any) {
-		console.error(error);
-	} finally {
-		process.exit(0);
-	}
-};
-
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
 
 void main();

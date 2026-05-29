@@ -34,8 +34,6 @@ Install the dependencies:
 ```
 
 ### Run
-> [!IMPORTANT]
-> FIRST TIME SETUP, YOU NEED TO RUN `npm run prisma:generate`
 
 **Development**
 
@@ -65,7 +63,7 @@ npm run format
 
 ### Error Found
 
-Let me know if you find error. Just make an issues, then i will fix it.<br />
+Let me know if you find error. Open a new issue, then i will fix it.<br />
 Don't forget to copy-paste your error log.
 
 ### Contribution
@@ -82,13 +80,18 @@ Feel free to make a pull request.
 |    Nuke    |          Nuke a Channel          |   ✅   |
 |   Purge    |      Clear Message History       |   ✅   |
 | Serverinfo |      Get Basic Server Info       |   ✅   |
-|   Steam    |     Check User Steam Profile     |   ✅   |
 
 ## Contributors
 
 <table>
   <tr>
-<td align="center"><a href="https://github.com/FaizBastomi" target="_blank"><img src="https://avatars3.githubusercontent.com/u/64179402?s=400&u=e571e59ee3bbc85379fccad978539ea0b926a9cb&v=4" width="100px;" alt=""/></a><br />
-<sub><b>Faiz Bastomi</b></sub><br /></td>
+    <td align="center">
+      <a href="https://github.com/FaizBastomi" target="_blank">
+        <img src="https://avatars3.githubusercontent.com/u/64179402?s=400&u=e571e59ee3bbc85379fccad978539ea0b926a9cb&v=4" width="100px;" alt=""/>
+      </a>
+      <br />
+      <sub><b>Faiz Bastomi</b>
+      </sub>
+    </td>
   </tr>
 </table>
