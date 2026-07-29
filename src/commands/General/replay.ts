@@ -66,6 +66,13 @@ export class ReplayCommand extends Command {
 			});
 		}
 
+		if (isFacebook && !/(\/v\/|\/videos\/|[\/?&]v=|fb\.watch|\/reel\/)/i.test(url)) {
+			return interaction.reply({
+				content: 'Only video URLs are supported for Facebook.',
+				flags: MessageFlags.Ephemeral
+			});
+		}
+
 		await interaction.deferReply();
 
 		try {
@@ -75,7 +82,9 @@ export class ReplayCommand extends Command {
 				return interaction.editReply({ content: 'Failed to retrieve media from the provided URL.' });
 			}
 
-			if (isInstagram && /reel/i.test(url)) {
+			if (isFacebook) {
+				mediaUrls = [mediaUrls[0]];
+			} else if (isInstagram && /reel/i.test(url)) {
 				const videoUrl = mediaUrls.find((mediaUrl) => /mp4/i.test(mediaUrl)) ?? mediaUrls[0];
 				mediaUrls = [videoUrl];
 			}
@@ -83,10 +92,16 @@ export class ReplayCommand extends Command {
 			const title = isInstagram ? '### Instagram' : '### Facebook';
 			const textDisplay = new TextDisplayBuilder().setContent(`${title}\n[Original URL](${url})`);
 
-			const mediaGallery = new MediaGalleryBuilder().addItems(
-				...mediaUrls.slice(0, 10).map((mediaUrl) => new MediaGalleryItemBuilder().setURL(mediaUrl))
-			);
-			const container = new ContainerBuilder().addTextDisplayComponents(textDisplay).addMediaGalleryComponents(mediaGallery);
+			const galleries: MediaGalleryBuilder[] = [];
+			for (let i = 0; i < mediaUrls.length; i += 10) {
+				galleries.push(
+					new MediaGalleryBuilder().addItems(
+						...mediaUrls.slice(i, i + 10).map((mediaUrl) => new MediaGalleryItemBuilder().setURL(mediaUrl))
+					)
+				);
+			}
+
+			const container = new ContainerBuilder().addTextDisplayComponents(textDisplay).addMediaGalleryComponents(...galleries);
 
 			try {
 				return await interaction.editReply({ components: [container], flags: MessageFlags.IsComponentsV2 });
