@@ -66,7 +66,7 @@ export class ReplayCommand extends Command {
 			});
 		}
 
-		if (isFacebook && !/(\/v\/|\/videos\/|[\/?&]v=|fb\.watch|\/reel\/)/i.test(url)) {
+		if (isFacebook && !/(\/v\/|\/videos\/|[\/?&]v=|fb\.watch|\/reel\/|\/r\/)/i.test(url)) {
 			return interaction.reply({
 				content: 'Only video URLs are supported for Facebook.',
 				flags: MessageFlags.Ephemeral
