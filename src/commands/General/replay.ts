@@ -53,64 +53,38 @@ export class ReplayCommand extends Command {
 	}
 
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-		const rawUrl = interaction.options.getString('url', true);
-		const url = cleanUrl(rawUrl);
-
+		const url = cleanUrl(interaction.options.getString('url', true));
 		const isInstagram = /instagram\.com|instagr\.am/i.test(url);
 		const isFacebook = /facebook\.com|fb\.watch|fb\.com/i.test(url);
 
-		if (!isInstagram && !isFacebook) {
-			return interaction.reply({
-				content: 'Please provide a valid Instagram or Facebook URL.',
-				flags: MessageFlags.Ephemeral
-			});
-		}
-
+		const replyError = (content: string) => interaction.reply({ content, flags: MessageFlags.Ephemeral });
+		if (!isInstagram && !isFacebook) return replyError('Please provide a valid Instagram or Facebook URL.');
 		if (isFacebook && !/(\/v\/|\/videos\/|[\/?&]v=|fb\.watch|\/reel\/|\/r\/)/i.test(url)) {
-			return interaction.reply({
-				content: 'Only video URLs are supported for Facebook.',
-				flags: MessageFlags.Ephemeral
-			});
+			return replyError('Only video URLs are supported for Facebook.');
 		}
 
 		await interaction.deferReply();
 
 		try {
 			let mediaUrls = isInstagram ? await getInstagramMedia(url) : await getFacebookMedia(url);
+			if (!mediaUrls?.length) return interaction.editReply({ content: 'Failed to retrieve media from the provided URL.' });
 
-			if (!mediaUrls || mediaUrls.length === 0) {
-				return interaction.editReply({ content: 'Failed to retrieve media from the provided URL.' });
-			}
-
-			if (isFacebook) {
-				mediaUrls = [mediaUrls[0]];
-			} else if (isInstagram && /reel/i.test(url)) {
-				const videoUrl = mediaUrls.find((mediaUrl) => /mp4/i.test(mediaUrl)) ?? mediaUrls[0];
-				mediaUrls = [videoUrl];
-			}
+			if (isFacebook) mediaUrls = [mediaUrls[0]];
+			else if (/reel/i.test(url)) mediaUrls = [mediaUrls.find((u) => /mp4/i.test(u)) || mediaUrls[0]];
 
 			const title = isInstagram ? '### Instagram' : '### Facebook';
 
 			for (let i = 0; i < mediaUrls.length; i += 10) {
 				const chunk = mediaUrls.slice(i, i + 10);
-				const mediaGallery = new MediaGalleryBuilder().addItems(...chunk.map((mediaUrl) => new MediaGalleryItemBuilder().setURL(mediaUrl)));
+				const mediaGallery = new MediaGalleryBuilder().addItems(...chunk.map((u) => new MediaGalleryItemBuilder().setURL(u)));
 				const container = new ContainerBuilder();
-				if (i === 0) {
-					container.addTextDisplayComponents(new TextDisplayBuilder().setContent(`${title}\n[Original URL](${url})`));
-				}
+				if (i === 0) container.addTextDisplayComponents(new TextDisplayBuilder().setContent(`${title}\n[Original URL](${url})`));
 				container.addMediaGalleryComponents(mediaGallery);
 
-				const payload = { components: [container], flags: MessageFlags.IsComponentsV2 as const };
-				const fallback = { content: chunk.join('\n') };
-
-				try {
-					if (i === 0) await interaction.editReply(payload);
-					else await interaction.followUp(payload);
-				} catch {
-					if (i === 0) await interaction.editReply(fallback);
-					else await interaction.followUp(fallback);
-				}
+				const send = (i === 0 ? interaction.editReply : interaction.followUp).bind(interaction);
+				await send({ components: [container], flags: MessageFlags.IsComponentsV2 as const }).catch(() => send({ content: chunk.join('\n') }));
 			}
+
 			return;
 		} catch (error) {
 			this.container.logger.error(error);
