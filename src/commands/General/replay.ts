@@ -14,7 +14,7 @@ import { getFacebookMedia, getInstagramMedia } from '../../lib/services/lolhuman
 function cleanUrl(inputUrl: string): string {
 	try {
 		const parsed = new URL(inputUrl);
-		for (const key of [...parsed.searchParams.keys()]) {
+		for (const key of parsed.searchParams.keys()) {
 			if (/^(igsh|utm_|fbclid|gclid|mibextid|share_id|ref|si?|s)/i.test(key)) parsed.searchParams.delete(key);
 		}
 		return parsed.toString();
@@ -90,24 +90,28 @@ export class ReplayCommand extends Command {
 			}
 
 			const title = isInstagram ? '### Instagram' : '### Facebook';
-			const textDisplay = new TextDisplayBuilder().setContent(`${title}\n[Original URL](${url})`);
 
-			const galleries: MediaGalleryBuilder[] = [];
 			for (let i = 0; i < mediaUrls.length; i += 10) {
-				galleries.push(
-					new MediaGalleryBuilder().addItems(
-						...mediaUrls.slice(i, i + 10).map((mediaUrl) => new MediaGalleryItemBuilder().setURL(mediaUrl))
-					)
-				);
-			}
+				const chunk = mediaUrls.slice(i, i + 10);
+				const mediaGallery = new MediaGalleryBuilder().addItems(...chunk.map((mediaUrl) => new MediaGalleryItemBuilder().setURL(mediaUrl)));
+				const container = new ContainerBuilder();
+				if (i === 0) {
+					container.addTextDisplayComponents(new TextDisplayBuilder().setContent(`${title}\n[Original URL](${url})`));
+				}
+				container.addMediaGalleryComponents(mediaGallery);
 
-			const container = new ContainerBuilder().addTextDisplayComponents(textDisplay).addMediaGalleryComponents(...galleries);
+				const payload = { components: [container], flags: MessageFlags.IsComponentsV2 as const };
+				const fallback = { content: chunk.join('\n') };
 
-			try {
-				return await interaction.editReply({ components: [container], flags: MessageFlags.IsComponentsV2 });
-			} catch {
-				return await interaction.editReply({ content: mediaUrls.join('\n') });
+				try {
+					if (i === 0) await interaction.editReply(payload);
+					else await interaction.followUp(payload);
+				} catch {
+					if (i === 0) await interaction.editReply(fallback);
+					else await interaction.followUp(fallback);
+				}
 			}
+			return;
 		} catch (error) {
 			this.container.logger.error(error);
 			return interaction.editReply({ content: 'An error occurred while fetching media from LoLhuman API.' });
