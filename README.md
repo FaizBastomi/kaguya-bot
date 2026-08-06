@@ -80,6 +80,7 @@ Feel free to make a pull request.
 |    Nuke    |          Nuke a Channel          |   ✅   |
 |   Purge    |      Clear Message History       |   ✅   |
 | Serverinfo |      Get Basic Server Info       |   ✅   |
+|   Replay   | Fix Instagram and Facebook embed |   ✅   |
 
 ## Contributors
 

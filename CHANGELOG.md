@@ -6,6 +6,17 @@
     <th align="left">Actions</th>
   </tr>
   <tr>
+    <td align="center">5 august 2026</td>
+    <td>
+        Added:
+        <ul>
+            <li>
+                replay
+            </li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td align="center">20 march 2025</td>
     <td>
         Added:

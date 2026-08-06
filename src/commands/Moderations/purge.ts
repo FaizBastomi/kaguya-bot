@@ -9,7 +9,8 @@ import { ApplicationIntegrationType, ChannelType, InteractionContextType, Permis
 	cooldownDelay: 5 * 1000,
 	subcommands: [
 		{ name: 'all', chatInputRun: 'purgeChatAll' },
-		{ name: 'user', chatInputRun: 'purgeChatUser' }
+		{ name: 'user', chatInputRun: 'purgeChatUser' },
+		{ name: 'bot', chatInputRun: 'purgeChatBot' }
 	]
 })
 export class PurgeCommand extends Subcommand {
@@ -45,6 +46,16 @@ export class PurgeCommand extends Subcommand {
 								.setDescription('The user to purge messages from')
 								.setRequired(true)
 						)
+						.addStringOption((option) =>
+							option //
+								.setName('amount')
+								.setDescription('The amount of messages to purge')
+						)
+				)
+				.addSubcommand((subcommand) =>
+					subcommand //
+						.setName('bot')
+						.setDescription('Purge all messages from bots')
 						.addStringOption((option) =>
 							option //
 								.setName('amount')
@@ -144,6 +155,53 @@ export class PurgeCommand extends Subcommand {
 			}
 
 			return interaction.editReply(`Successfully purged **${filteredMessages?.size}** messages from ${user}`).then((msg) => {
+				setTimeout(async () => {
+					await msg.delete().catch(() => null);
+				}, 5 * 1000);
+			});
+		}
+	}
+
+	public async purgeChatBot(interaction: Subcommand.ChatInputCommandInteraction) {
+		const channel = interaction.channel;
+
+		if (channel?.type === ChannelType.GuildText) {
+			const textChannel = channel as TextChannel;
+			const amountOption = interaction.options.getString('amount');
+			const amount = amountOption ? parseInt(amountOption) : 100;
+
+			if (isNaN(amount) || amount < 2 || amount > MessageLimits.MaximumMessagesToBulkDelete) {
+				return interaction.reply(`Please provide a number between 2 and ${MessageLimits.MaximumMessagesToBulkDelete}`).then((msg) => {
+					setTimeout(async () => {
+						await msg.delete().catch(() => null);
+					}, 5 * 1000);
+				});
+			}
+
+			const messages = await textChannel.messages.fetch({ limit: amount });
+			const filteredMessages = messages.filter((msg) => msg.author.bot && Date.now() - msg.createdTimestamp < 14 * 24 * 60 * 60 * 1000);
+
+			await interaction.deferReply();
+
+			if (filteredMessages.size < 1) {
+				return interaction.editReply('No messages found to delete').then((msg) => {
+					setTimeout(async () => {
+						await msg.delete().catch(() => null);
+					}, 5 * 1000);
+				});
+			}
+
+			try {
+				await textChannel.bulkDelete(filteredMessages, true);
+			} catch (error) {
+				return interaction.editReply('An error occurred while trying to purge messages.').then((msg) => {
+					setTimeout(async () => {
+						await msg.delete().catch(() => null);
+					}, 5 * 1000);
+				});
+			}
+
+			return interaction.editReply(`Successfully purged **${filteredMessages?.size}** bot messages`).then((msg) => {
 				setTimeout(async () => {
 					await msg.delete().catch(() => null);
 				}, 5 * 1000);
