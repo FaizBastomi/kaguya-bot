@@ -13,9 +13,10 @@ import { getFacebookMedia, getInstagramMedia } from '../../lib/services/lolhuman
 
 function cleanUrl(inputUrl: string): string {
 	try {
+		if (!inputUrl.includes('?') && inputUrl.includes('&')) inputUrl = inputUrl.replace('&', '?');
 		const parsed = new URL(inputUrl);
 		for (const key of parsed.searchParams.keys()) {
-			if (/^(igsh|utm_|fbclid|gclid|mibextid|share_id|ref|si?|s)/i.test(key)) parsed.searchParams.delete(key);
+			if (/^(igs[hi]|utm_|fbclid|gclid|mibextid|share_id|ref|si?|s)/i.test(key)) parsed.searchParams.delete(key);
 		}
 		return parsed.toString();
 	} catch {
