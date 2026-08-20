@@ -81,7 +81,10 @@ export class WhoisCommand extends Command {
 			container.addTextDisplayComponents(new TextDisplayBuilder().setContent(`**Key Permissions:**\n${specialPerms}`));
 		}
 
-		const avatarButton = new ButtonBuilder().setCustomId(`whois_avatar_${user.id}`).setLabel('View Avatar').setStyle(ButtonStyle.Primary);
+		const avatarButton = new ButtonBuilder()
+			.setCustomId(`whois_avatar_${user.id}_${interaction.user.id}`)
+			.setLabel('View Avatar')
+			.setStyle(ButtonStyle.Primary);
 		container.addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(avatarButton));
 
 		return interaction.reply({
