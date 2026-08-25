@@ -9,20 +9,7 @@ import {
 	MessageFlags,
 	TextDisplayBuilder
 } from 'discord.js';
-import { getFacebookMedia, getInstagramMedia, getTikTokMedia } from '../../lib/services/lolhuman';
-
-function cleanUrl(inputUrl: string): string {
-	try {
-		if (!inputUrl.includes('?') && inputUrl.includes('&')) inputUrl = inputUrl.replace('&', '?');
-		const parsed = new URL(inputUrl);
-		for (const key of parsed.searchParams.keys()) {
-			if (/^(igs[hi]|utm_|fbclid|gclid|mibextid|share_id|ref|si?|s)/i.test(key)) parsed.searchParams.delete(key);
-		}
-		return parsed.toString();
-	} catch {
-		return inputUrl;
-	}
-}
+import { cleanUrl, processor } from '../../lib/services/replayProcessor';
 
 @ApplyOptions<Command.Options>({
 	name: 'replay',
@@ -55,33 +42,21 @@ export class ReplayCommand extends Command {
 
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
 		const url = cleanUrl(interaction.options.getString('url', true));
-		const isInstagram = /instagram\.com|instagr\.am/i.test(url);
-		const isFacebook = /facebook\.com|fb\.watch|fb\.com/i.test(url);
-		const isTiktok = /tiktok\.com/i.test(url);
 
-		const replyError = (content: string) => interaction.reply({ content, flags: MessageFlags.Ephemeral });
-		if (!isInstagram && !isFacebook && !isTiktok) return replyError('Please provide a valid Instagram, Facebook, or TikTok URL.');
-		if (isFacebook && !/(\/v\/|\/videos\/|[\/?&]v=|fb\.watch|\/reel\/|\/r\/)/i.test(url)) {
-			return replyError('Only video URLs are supported for Facebook.');
-		}
+		const handler = processor.getHandler(url);
+		if ('error' in handler) return interaction.reply({ content: handler.error, flags: MessageFlags.Ephemeral });
 
 		await interaction.deferReply();
 
 		try {
-			let mediaUrls: string[] = [];
-			if (isInstagram) mediaUrls = await getInstagramMedia(url);
-			else if (isFacebook) mediaUrls = await getFacebookMedia(url);
-			else mediaUrls = await getTikTokMedia(url);
-
+			const mediaUrls = await handler.fetch(url);
 			if (!mediaUrls?.length) return interaction.editReply({ content: 'Failed to retrieve media from the provided URL.' });
 
-			if (isFacebook) mediaUrls = [mediaUrls[0]];
-			else if (/reel/i.test(url)) mediaUrls = [mediaUrls.find((u) => /mp4/i.test(u)) || mediaUrls[0]];
+			const processedUrls = handler.postProcess ? handler.postProcess(mediaUrls, url) : mediaUrls;
+			const title = `### ${handler.name}`;
 
-			const title = isInstagram ? '### Instagram' : isFacebook ? '### Facebook' : '### TikTok';
-
-			for (let i = 0; i < mediaUrls.length; i += 10) {
-				const chunk = mediaUrls.slice(i, i + 10);
+			for (let i = 0; i < processedUrls.length; i += 10) {
+				const chunk = processedUrls.slice(i, i + 10);
 				const mediaGallery = new MediaGalleryBuilder().addItems(...chunk.map((u) => new MediaGalleryItemBuilder().setURL(u)));
 				const container = new ContainerBuilder();
 				if (i === 0) container.addTextDisplayComponents(new TextDisplayBuilder().setContent(`${title}\n[Original URL](${url})`));
