@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { FacebookResponse, InstagramResponse } from './types/lolhuman.api';
+import type { FacebookResponse, InstagramResponse, TikTokImgResponse, TikTokVidResponse } from './types/lolhuman.api';
 
 const BASE_URL = 'https://api.lolhuman.xyz/api';
 
@@ -30,4 +30,15 @@ export async function getFacebookMedia(url: string): Promise<string[]> {
 	const apikey = getApiKey();
 	const { data } = await axios.get<FacebookResponse>(`${BASE_URL}/facebook`, { params: { apikey, url } });
 	return data.result || [];
+}
+
+export async function getTikTokMedia(url: string): Promise<string[]> {
+	const apikey = getApiKey();
+	try {
+		const { data } = await axios.get<TikTokImgResponse>(`${BASE_URL}/tiktokslide`, { params: { apikey, url } });
+		if (data.status === 200 && data.result?.length) return data.result;
+	} catch {}
+
+	const { data } = await axios.get<TikTokVidResponse>(`${BASE_URL}/tiktok`, { params: { apikey, url } });
+	return data.result?.link ? [data.result.link] : [];
 }

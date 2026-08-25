@@ -9,7 +9,7 @@ import {
 	MessageFlags,
 	TextDisplayBuilder
 } from 'discord.js';
-import { getFacebookMedia, getInstagramMedia } from '../../lib/services/lolhuman';
+import { getFacebookMedia, getInstagramMedia, getTikTokMedia } from '../../lib/services/lolhuman';
 
 function cleanUrl(inputUrl: string): string {
 	try {
@@ -47,7 +47,7 @@ export class ReplayCommand extends Command {
 				.addStringOption((option) =>
 					option //
 						.setName('url')
-						.setDescription('The Instagram or Facebook URL to replay/download')
+						.setDescription('The Instagram, Facebook, or TikTok URL to replay/download')
 						.setRequired(true)
 				)
 		);
@@ -57,9 +57,10 @@ export class ReplayCommand extends Command {
 		const url = cleanUrl(interaction.options.getString('url', true));
 		const isInstagram = /instagram\.com|instagr\.am/i.test(url);
 		const isFacebook = /facebook\.com|fb\.watch|fb\.com/i.test(url);
+		const isTiktok = /tiktok\.com/i.test(url);
 
 		const replyError = (content: string) => interaction.reply({ content, flags: MessageFlags.Ephemeral });
-		if (!isInstagram && !isFacebook) return replyError('Please provide a valid Instagram or Facebook URL.');
+		if (!isInstagram && !isFacebook && !isTiktok) return replyError('Please provide a valid Instagram, Facebook, or TikTok URL.');
 		if (isFacebook && !/(\/v\/|\/videos\/|[\/?&]v=|fb\.watch|\/reel\/|\/r\/)/i.test(url)) {
 			return replyError('Only video URLs are supported for Facebook.');
 		}
@@ -67,13 +68,17 @@ export class ReplayCommand extends Command {
 		await interaction.deferReply();
 
 		try {
-			let mediaUrls = isInstagram ? await getInstagramMedia(url) : await getFacebookMedia(url);
+			let mediaUrls: string[] = [];
+			if (isInstagram) mediaUrls = await getInstagramMedia(url);
+			else if (isFacebook) mediaUrls = await getFacebookMedia(url);
+			else mediaUrls = await getTikTokMedia(url);
+
 			if (!mediaUrls?.length) return interaction.editReply({ content: 'Failed to retrieve media from the provided URL.' });
 
 			if (isFacebook) mediaUrls = [mediaUrls[0]];
 			else if (/reel/i.test(url)) mediaUrls = [mediaUrls.find((u) => /mp4/i.test(u)) || mediaUrls[0]];
 
-			const title = isInstagram ? '### Instagram' : '### Facebook';
+			const title = isInstagram ? '### Instagram' : isFacebook ? '### Facebook' : '### TikTok';
 
 			for (let i = 0; i < mediaUrls.length; i += 10) {
 				const chunk = mediaUrls.slice(i, i + 10);
