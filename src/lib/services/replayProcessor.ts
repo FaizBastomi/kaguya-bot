@@ -30,7 +30,14 @@ export class ReplayProcessor {
 	}
 
 	public getHandler(url: string): PlatformHandler | { error: string } {
-		const handler = this.platforms.find((p) => p.regex.test(url));
+		let hostname: string;
+		try {
+			hostname = new URL(url).hostname;
+		} catch {
+			return { error: 'Please provide a valid URL.' };
+		}
+
+		const handler = this.platforms.find((p) => p.regex.test(hostname));
 		if (!handler) return { error: 'Please provide a valid Instagram, Facebook, or TikTok URL.' };
 
 		if (handler.validate) {
@@ -44,13 +51,13 @@ export class ReplayProcessor {
 export const processor = new ReplayProcessor()
 	.addPlatform({
 		name: 'Instagram',
-		regex: /instagram\.com/i,
+		regex: /(?:^|\.)(instagram\.com)$/i,
 		fetch: getInstagramMedia,
 		postProcess: (urls, url) => (/reel/i.test(url) ? [urls.find((u) => /mp4/i.test(u)) || urls[0]] : urls)
 	})
 	.addPlatform({
 		name: 'Facebook',
-		regex: /facebook\.com|fb\.watch|fb\.com/i,
+		regex: /(?:^|\.)(facebook\.com|fb\.watch|fb\.com)$/i,
 		validate: (url) =>
 			!/(\/v\/|\/videos\/|[\/?&]v=|fb\.watch|\/reel\/|\/r\/)/i.test(url) ? 'Only video URLs are supported for Facebook.' : null,
 		fetch: getFacebookMedia,
@@ -58,6 +65,6 @@ export const processor = new ReplayProcessor()
 	})
 	.addPlatform({
 		name: 'TikTok',
-		regex: /tiktok\.com/i,
+		regex: /(?:^|\.)(tiktok\.com)$/i,
 		fetch: getTikTokMedia
 	});
