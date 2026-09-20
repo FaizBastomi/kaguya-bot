@@ -138,10 +138,10 @@
   resolved "https://registry.yarnpkg.com/@sapphire/duration/-/duration-1.2.0.tgz#e0174279b4a1a8e15d6daebd8536b5bec656dbf7"
   integrity sha512-LxjOAFXz81WmrI8XX9YaVcAZDjQj/1p78lZCvkAWZB1nphOwz/D0dU3CBejmhOWx5dO5CszTkLJMNR0xuCK+Zg==
 
-"@sapphire/framework@5.5.0":
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/@sapphire/framework/-/framework-5.5.0.tgz#650d2b76c83d7007c67bf8f2b5a938db36921a3c"
-  integrity sha512-jC+zS8yR/MtJaTFEQutBBWj7Scuvny4d0adtQ3s0OCFWe3rUqNfENomBG3P4tsQ/kRF7L3WCqucyLV8ywG24hw==
+"@sapphire/framework@5.5.1":
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/@sapphire/framework/-/framework-5.5.1.tgz#1cd1626a16f5018828fb20a14c0f68bf2481729d"
+  integrity sha512-UlEoj3XRjSyGJg1+kD43q5YHfmDDJ1fNN5Ws3OifvgMNhnOrrL1diTjU1ALfLrfUbPuBCJWD1ZfIj/i/J4K9eQ==
   dependencies:
     "@discordjs/builders" "^1.13.0"
     "@sapphire/discord-utilities" "^4.0.0"
