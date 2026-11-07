@@ -1,6 +1,6 @@
 {
 	"name": "kaguya-bot",
-	"version": "0.3.13",
+	"version": "0.3.15",
 	"main": "dist/index.js",
 	"author": "Faiz",
 	"license": "UNLICENSE",
@@ -21,6 +21,7 @@
 	},
 	"devDependencies": {
 		"@sapphire/cli": "^1.9.3",
+		"@sapphire/pieces": "4.4.1",
 		"@sapphire/prettier-config": "^2.0.0",
 		"@sapphire/ts-config": "^5.0.1",
 		"@types/lodash": "^4.17.16",
@@ -33,7 +34,6 @@
 	"scripts": {
 		"sapphire": "sapphire",
 		"generate": "sapphire generate",
-		"prisma:generate": "prisma generate --schema=src/prisma/schema.prisma",
 		"build": "tsc",
 		"watch": "tsc -w",
 		"start": "node dist/index.js",
@@ -43,8 +43,7 @@
 		"format": "prettier --write \"src/\""
 	},
 	"prettier": "@sapphire/prettier-config",
-	"packageManager": "yarn@1.22.22",
 	"engines": {
-		"node": ">=20.18.0"
+		"node": ">=24.22.2"
 	}
 }
