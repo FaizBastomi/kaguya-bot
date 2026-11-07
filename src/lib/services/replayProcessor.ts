@@ -1,4 +1,4 @@
-import { getFacebookMedia, getInstagramMedia, getTikTokMedia } from './lolhuman';
+import { getFacebookMedia, getInstagramMedia, getPixivMedia, getTikTokMedia } from './lolhuman';
 
 export function cleanUrl(inputUrl: string): string {
 	try {
@@ -38,7 +38,7 @@ export class ReplayProcessor {
 		}
 
 		const handler = this.platforms.find((p) => p.regex.test(hostname));
-		if (!handler) return { error: 'Please provide a valid Instagram, Facebook, or TikTok URL.' };
+		if (!handler) return { error: 'Please provide a valid Instagram, Facebook, TikTok, or Pixiv URL.' };
 
 		if (handler.validate) {
 			const err = handler.validate(url);
@@ -67,4 +67,10 @@ export const processor = new ReplayProcessor()
 		name: 'TikTok',
 		regex: /(?:^|\.)(tiktok\.com)$/i,
 		fetch: getTikTokMedia
+	})
+	.addPlatform({
+		name: 'Pixiv',
+		regex: /(?:^|\.)(pixiv\.net)$/i,
+		validate: (url) => (!/(?:artworks\/|illust_id=)(\d+)/i.test(url) ? 'Please provide a valid Pixiv artwork URL.' : null),
+		fetch: getPixivMedia
 	});

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { FacebookResponse, InstagramResponse, TikTokImgResponse, TikTokVidResponse } from './types/lolhuman.api';
+import type { FacebookResponse, InstagramResponse, PixivResponse, TikTokImgResponse, TikTokVidResponse } from './types/lolhuman.api';
 
 const BASE_URL = 'https://api.lolhuman.xyz/api';
 
@@ -41,4 +41,17 @@ export async function getTikTokMedia(url: string): Promise<string[]> {
 
 	const { data } = await axios.get<TikTokVidResponse>(`${BASE_URL}/tiktok`, { params: { apikey, url } });
 	return data.result?.link ? [data.result.link] : [];
+}
+
+export async function getPixivMedia(url: string): Promise<string[]> {
+	const match = url.match(/(?:artworks\/|illust_id=)(\d+)/i);
+	if (!match) return [];
+
+	const apikey = getApiKey();
+	try {
+		const { data } = await axios.get<PixivResponse>(`${BASE_URL}/pixivdl/${match[1]}`, { params: { apikey } });
+		return data.result?.images || [];
+	} catch {
+		return [];
+	}
 }

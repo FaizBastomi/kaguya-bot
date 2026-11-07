@@ -13,7 +13,7 @@ import { cleanUrl, processor } from '../../lib/services/replayProcessor';
 
 @ApplyOptions<Command.Options>({
 	name: 'replay',
-	description: 'Download Instagram and Facebook media from URL',
+	description: 'Download Instagram, Facebook, TikTok, or Pixiv media from URL',
 	cooldownDelay: 5 * 1000
 })
 export class ReplayCommand extends Command {
@@ -34,7 +34,7 @@ export class ReplayCommand extends Command {
 				.addStringOption((option) =>
 					option //
 						.setName('url')
-						.setDescription('The Instagram, Facebook, or TikTok URL to replay/download')
+						.setDescription('The Instagram, Facebook, TikTok, or Pixiv URL to replay/download')
 						.setRequired(true)
 				)
 		);

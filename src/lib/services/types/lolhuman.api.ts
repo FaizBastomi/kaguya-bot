@@ -45,3 +45,15 @@ export interface TikTokImgResponse {
 	message: string;
 	result: string[];
 }
+
+export interface PixivResponse {
+	status: number;
+	message: string;
+	result: PixivResult;
+}
+
+export interface PixivResult {
+	id: number;
+	title: string;
+	images: string[];
+}
